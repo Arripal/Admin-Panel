@@ -3,12 +3,8 @@
 
 function error_handler($error_message = '', $code = 404)
 {
-
     http_response_code($code);
-
-    return  [
-        'error' => $error_message
-    ];
+    throw new Exception($error_message, $code);
 }
 
 

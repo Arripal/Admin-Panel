@@ -3,9 +3,6 @@
 class Router
 {
     private $routes = [];
-    private $protected_paths = [
-        ['admin' => '/admin/dashboard']
-    ];
 
     private function add_route($url, $controller, $method,)
     {
@@ -50,27 +47,12 @@ class Router
 
     public function use_route($url, $method)
     {
-
         $route = $this->current_route($url, $method);
-
 
         if (!$route) {
             throw new RouterException("Impossible d'accéder à votre requête", 500);
         }
 
         return require(__DIR__ . '../../controllers' . $route['controller']);
-    }
-
-    public function is_protected_path($url_path)
-    {
-        $protected_paths = $this->protected_paths;
-
-        $protected = array_map(function ($path) use ($url_path) {
-            foreach ($path as $role => $path) {
-                return str_starts_with($url_path, $path);
-            }
-        }, $protected_paths);
-
-        return $protected[0];
     }
 }

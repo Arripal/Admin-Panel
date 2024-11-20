@@ -1,5 +1,4 @@
 <?php
-session_start();
 require('./Classes/Session.php');
 require('./Classes/Database.php');
 require('./Classes/Authentification.php');

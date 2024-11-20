@@ -34,6 +34,14 @@ if (!$is_valid_location || !$is_valid_title) {
 
 try {
 
+
+    $equipments_pg_array = '{' . implode(',', array_map(function ($item) {
+        // Échapper les guillemets et les virgules
+        return '"' . str_replace('"', '\\"', $item) . '"';
+    }, $data['equipments'])) . '}';
+
+
+
     $db->db_query(
         'UPDATE public.logements SET 
                 title = :title,
@@ -48,7 +56,7 @@ try {
             'location' => $data['location'], //string
             'cover' => $data['cover'], //url
             'description' => $data['description'], //string
-            'location' => $data['location'], //string
+            'equipments' => $equipments_pg_array
 
         ]
     );
