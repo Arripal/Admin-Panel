@@ -11,14 +11,16 @@ $validation = new Validation();
 
 $data = $_POST;
 
+
 $corresponding_logement = $db->fetch('SELECT * FROM public.logements WHERE id = :id', [
     'id' => $data['id']
 ]);
 
 
-
-//$data = array_slice($form_data, 1, count($form_data) - 2);
-//$equipments = array_slice($form_data, -1, 1);
+if (count($corresponding_logement) < 1) {
+    $session->set_message('empty', 'Aucun logement correspondant à votre demande');
+    redirect_to("location:javascript://history.go(-1)");
+}
 
 // Seuls ces deux éléments doivent avoir une valeur en DB, le reste peut être null
 
@@ -27,20 +29,15 @@ $is_valid_location = $validation->is_valid_length($data['location']);
 
 
 if (!$is_valid_location || !$is_valid_title) {
-
     redirect_to("location:javascript://history.go(-1)");
+    die();
 }
-
 
 try {
 
-
-    $equipments_pg_array = '{' . implode(',', array_map(function ($item) {
-        // Échapper les guillemets et les virgules
+    $equipments_db = '{' . implode(',', array_map(function ($item) {
         return '"' . str_replace('"', '\\"', $item) . '"';
     }, $data['equipments'])) . '}';
-
-
 
     $db->db_query(
         'UPDATE public.logements SET 
@@ -56,7 +53,7 @@ try {
             'location' => $data['location'], //string
             'cover' => $data['cover'], //url
             'description' => $data['description'], //string
-            'equipments' => $equipments_pg_array
+            'equipments' => $equipments_db
 
         ]
     );
@@ -66,10 +63,4 @@ try {
     throw $e;
 }
 
-
-
-
-
-// Une fois les données validées nettoyées et stockées, rediriger l'utilisateur vers la page logements avec la liste a jour
-
-//TODO : Regarder quels sont les traitements a réaliser sur les données reçus dans le controller avant de les stockees en Db
+//TODO : Afficher via les sessions les messages d'erreurs

@@ -1,4 +1,4 @@
 <?php
 
 
-echo 'Delete logement';
+echo 'Delete logement' . $_POST;

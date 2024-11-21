@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 require('./Classes/Session.php');
 require('./Classes/Database.php');
 require('./Classes/Authentification.php');
@@ -20,7 +18,9 @@ $logement = $db->fetch("SELECT * FROM public.logements WHERE id= :id ", [
     'id' => $logement_id
 ]);
 
-
+if (empty($logement)) {
+    redirect_to('/admin/dashboard/not_found');
+}
 
 $db->close_connexion();
 

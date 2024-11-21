@@ -14,23 +14,23 @@ access_view('/components/head.view', ['title' => 'Logements']);
         access_view('/components/sidebar.view');
         ?>
         <main class="content">
-            <h2>Liste des logements</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Hôte</th>
-                        <th>Localisation</th>
-                        <th>Description</th>
-                        <th>Image couverture</th>
-                        <th>Equipements</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if (isset($logements)) { ?>
+            <?php
+            if (isset($logements)) { ?>
+                <h2>Liste des logements</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Hôte</th>
+                            <th>Localisation</th>
+                            <th>Description</th>
+                            <th>Image couverture</th>
+                            <th>Equipements</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <?php foreach ($logements as $logement) { ?>
                             <tr>
                                 <td><?= htmlspecialchars(trim($logement['id']))  ?></td>
@@ -78,9 +78,14 @@ access_view('/components/head.view', ['title' => 'Logements']);
                                 </td>
                             </tr>
                         <?php  } ?>
-                    <?php } ?>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            <?php } ?>
+            <?php if (!empty($errors)) { ?>
+                <div>
+                    <h2><?= htmlspecialchars($errors['db']) ?></h2>
+                </div>
+            <?php } ?>
         </main>
     </div>
 </body>
