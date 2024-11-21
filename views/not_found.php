@@ -15,8 +15,18 @@ access_view('/components/head.view', ['title' => 'Erreur']);
         ?>
         <main class="content">
             <h2>La page demandée n'existe pas </h2>
-            <p>Veuillez vérifier qu'il n'y ai pas d'erreur dans votre reqûete.</p>
+            <?php if (!empty($errors)) { ?>
+                <div>
+                    <?php foreach ($errors as $error): ?>
+                        <p class="error-404"><?= htmlspecialchars($error) ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php } ?>
+            <div>
+                <a href="/admin/dashboard">Retourner à l'accueil</a>
+            </div>
         </main>
+
     </div>
 </body>
 

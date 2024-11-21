@@ -1,8 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 require('./utils.php');
-require('./Classes/RouterException.php');
-require('./Classes/ApiException.php');
 require('./Routing/Router.php');
 
 

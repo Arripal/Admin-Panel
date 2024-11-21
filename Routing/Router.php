@@ -50,7 +50,7 @@ class Router
         $route = $this->current_route($url, $method);
 
         if (!$route) {
-            throw new RouterException("Impossible d'accéder à votre requête", 500);
+            throw new Exception("Impossible d'accéder à votre requête", 500);
         }
 
         return require(__DIR__ . '../../controllers' . $route['controller']);

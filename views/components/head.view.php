@@ -184,6 +184,12 @@
             padding: 2px 0;
         }
 
+
+        .error-404 {
+            font-size: 25px;
+            color: red;
+        }
+
         form {
             background-color: white;
             padding: 2rem;

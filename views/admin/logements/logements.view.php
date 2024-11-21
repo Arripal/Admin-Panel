@@ -4,7 +4,13 @@ access_view('/components/head.view', ['title' => 'Logements']);
 
 <body>
     <style>
-
+        .delete-form {
+            width: fit-content;
+            height: fit-content;
+            padding: 0;
+            background: none;
+            box-shadow: none;
+        }
     </style>
     <?php
     access_view('/components/header.view');
@@ -70,9 +76,14 @@ access_view('/components/head.view', ['title' => 'Logements']);
                                         <button class="btn btn-edit">
                                             <a href="/admin/dashboard/logements/edit?id=<?= htmlspecialchars(trim($logement['id'])) ?>">Editer</a>
                                         </button>
-                                        <button class="btn btn-delete">
-                                            <a href="/admin/dashboard/logements/delete?id=<?= htmlspecialchars(trim($logement['id'])) ?>">Supprimer</a>
-                                        </button>
+                                        <form class="delete-form" action="/admin/dashboard/logements/delete" method="post">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="logement_id" value="<?= htmlspecialchars(trim($logement['id'])) ?>">
+                                            <button type="submit" class="btn btn-delete">
+                                                Supprimer
+                                            </button>
+                                        </form>
+
                                     </div>
 
                                 </td>

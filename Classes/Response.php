@@ -5,7 +5,7 @@
 class Response
 {
 
-    public function send_response($data = null, $status = 'success', $error = null, $code = 200)
+    public function send_json_response($data = null, $status = 'success', $error = null, $code = 200)
     {
 
         $response = [

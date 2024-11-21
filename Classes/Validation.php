@@ -35,7 +35,7 @@ class Validation
 
     public function is_valid_URL($url)
     {
-        return filter_var(trim($url), FILTER_VALIDATE_URL);
+        return filter_var($url, FILTER_VALIDATE_URL);
     }
 
 
