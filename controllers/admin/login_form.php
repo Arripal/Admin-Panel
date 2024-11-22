@@ -2,4 +2,4 @@
 
 
 
-require('views/admin/login.view.php');
+access_view('/admin/login.view');

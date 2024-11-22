@@ -285,9 +285,83 @@
                 order: 2;
             }
 
-            .content {
+            .main-content {
                 order: 1;
             }
+        }
+
+        /* Styles existants pour le body, la sidebar et le header */
+
+        .main-content {
+            margin: 0 50px;
+
+        }
+
+        .welcome-section {
+            margin-bottom: 30px;
+        }
+
+        .welcome-section h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .quick-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+        }
+
+        .action-list {
+            flex: 1;
+            background-color: #2c3e50;
+
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-list h2 {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .action-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .action-list li {
+            margin-bottom: 10px;
+        }
+
+        .action-list a {
+            display: block;
+            padding: 10px 5px;
+            color: #e9e9e9;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+            transition: background-color color 0.3s ease;
+        }
+
+        .action-list a:hover {
+            color: #999;
+            background-color: #34495e;
+        }
+
+        .add-list {
+            padding: 0;
         }
     </style>
 </head>

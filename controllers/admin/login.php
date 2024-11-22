@@ -19,7 +19,7 @@ $password = $_POST['password'];
 $are_valid_inputs = $validation->is_valid_email($email) && $validation->is_valid_password($password);
 
 if (!$are_valid_inputs) {
-    return access_view('admin/login.view', [
+    access_view('admin/login.view', [
         'invalid' => 'Les identifiants fournis sont incorrects.'
     ]);
     die();
@@ -31,7 +31,7 @@ $existing_admin = $auth->verify_existing_admin($email, $password);
 
 if (!$existing_admin) {
 
-    return access_view('admin/login.view', [
+    access_view('admin/login.view', [
         'invalid' => 'Les identifiants fournis sont incorrects.'
     ]);
     die();

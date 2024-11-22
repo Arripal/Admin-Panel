@@ -13,6 +13,8 @@ $router->put('/admin/dashboard/users/update', '/admin/users/update.php');
 $router->delete('/admin/dashboard/users/delete', '/admin/users/delete.php');
 
 $router->get('/admin/dashboard/logements', '/admin/logements/show.php');
+$router->get('/admin/dashboard/logements/add', '/admin/logements/add.php');
+$router->post('/admin/dashboard/logements/save', '/admin/logements/save.php');
 $router->get('/admin/dashboard/logements/edit', '/admin/logements/edit.php');
 $router->put('/admin/dashboard/logements/update', '/admin/logements/update.php');
 $router->delete('/admin/dashboard/logements/delete', '/admin/logements/delete.php');
