@@ -1,5 +1,5 @@
 <?php
-access_view('/components/head.view', ['title' => 'Utilisateurs']);
+access_view('/components/head.view', ['title' => 'Utilisateurs - Edition']);
 ?>
 
 <body>
@@ -39,9 +39,13 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
                                     <button class="btn btn-edit">
                                         <a href="/admin/dashboard/users/edit">Editer</a>
                                     </button>
-                                    <button class="btn btn-delete">
-                                        <a href="/admin/dashboard/users/delete">Supprimer</a>
-                                    </button>
+                                    <form class="delete-form" action="/admin/dashboard/users/delete" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="user_id" value="<?= htmlspecialchars(trim($user['id'])) ?>">
+                                        <button type="submit" class="btn btn-delete">
+                                            Supprimer
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php  } ?>

@@ -83,9 +83,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                                                 Supprimer
                                             </button>
                                         </form>
-
                                     </div>
-
                                 </td>
                             </tr>
                         <?php  } ?>

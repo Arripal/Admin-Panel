@@ -24,4 +24,39 @@ if (!$is_valid_location || !$is_valid_title || !$is_valid_url || !$is_valid_desc
     die();
 }
 
+try {
+
+    $equipments_db = set_array_to_db_insertion($logement_data_to_add['equipments']);
+    $tags_db = set_array_to_db_insertion($logement_data_to_add['tags']);
+    $pictures_db = set_array_to_db_insertion($logement_data_to_add['pictures']);
+
+    $db->db_query(
+        'INSERT INTO public.logements 
+                title = :title,
+                location = :location,
+                cover = :cover,
+                description = :description,
+                pictures = :pictures,
+                equipments = :equipments,
+                tags = :tags',
+        [
+            'title' => strip_tags($logement_data_to_add['title']),
+            'location' => strip_tags($logement_data_to_add['location']),
+            'cover' => $logement_data_to_add['cover'],
+            'description' => strip_tags($logement_data_to_add['description']),
+            'pictures' => $pictures_db,
+            'equipments' => $equipments_db,
+            'tags' => $tags_db
+
+        ]
+    );
+
+    redirect_to('/admin/dashboard/logements');
+} catch (PDOException $e) {
+    throw $e;
+} finally {
+    $db->close_connexion();
+}
+
+
 var_dump($logement_data_to_add);

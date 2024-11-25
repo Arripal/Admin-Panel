@@ -59,9 +59,13 @@ access_view('/components/head.view', ['title' => 'Logements']);
                                     <button class="btn btn-back">
                                         <a href="/admin/dashboard/logements">Retour</a>
                                     </button>
-                                    <button class="btn btn-delete">
-                                        <a href="/admin/logements/delete/" <?= htmlspecialchars(trim($logement['id'])) ?>>Supprimer</a>
-                                    </button>
+                                    <form class="delete-form" action="/admin/dashboard/logements/delete" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="logement_id" value="<?= htmlspecialchars(trim($logement['id'])) ?>">
+                                        <button type="submit" class="btn btn-delete">
+                                            Supprimer
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
