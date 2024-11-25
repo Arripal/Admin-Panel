@@ -11,7 +11,7 @@ $data = $_POST;
 $errors = [];
 
 try {
-    $corresponding_user = $db->fetch('SELECT * FROM public.users WHERE id = :id', [
+    $corresponding_user = $db->fetch('SELECT * FROM public.user WHERE id = :id', [
         'id' => $data['user_id']
     ]);
 
@@ -23,7 +23,7 @@ try {
         die();
     }
 
-    $db->db_query('DELETE FROM public.users WHERE id = :id', [
+    $db->db_query('DELETE FROM public.user WHERE id = :id', [
         'id' => $data['user_id']
     ]);
 

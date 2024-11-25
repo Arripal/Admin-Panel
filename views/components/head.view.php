@@ -77,6 +77,23 @@
             color: white;
         }
 
+        .btn-add {
+            background-color: #4CAF50;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            background-color: white;
+            border: #2d3748 1px solid;
+
+        }
+
+        .btn-back a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+
         :root {
             --primary-color: #3490dc;
             --background-color: #f8fafc;
@@ -362,6 +379,14 @@
 
         .add-list {
             padding: 0;
+        }
+
+        .delete-form {
+            width: fit-content;
+            height: fit-content;
+            padding: 0;
+            background: none;
+            box-shadow: none;
         }
     </style>
 </head>

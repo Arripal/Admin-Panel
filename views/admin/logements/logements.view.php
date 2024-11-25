@@ -3,15 +3,6 @@ access_view('/components/head.view', ['title' => 'Logements']);
 ?>
 
 <body>
-    <style>
-        .delete-form {
-            width: fit-content;
-            height: fit-content;
-            padding: 0;
-            background: none;
-            box-shadow: none;
-        }
-    </style>
     <?php
     access_view('/components/header.view');
     ?>

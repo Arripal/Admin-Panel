@@ -14,7 +14,7 @@ $auth->verify_admin_access();
 
 try {
 
-    $users = $db->fetch_all("SELECT * FROM public.users");
+    $users = $db->fetch_all("SELECT * FROM public.user");
 
     if (empty($users)) {
         $errors['empty'] = "La ressource demandée est indisponible.";

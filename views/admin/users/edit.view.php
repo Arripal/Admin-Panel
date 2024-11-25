@@ -1,5 +1,5 @@
 <?php
-access_view('/components/head.view', ['title' => 'Utilisateurs - Edition']);
+access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
 ?>
 
 <body>
@@ -26,18 +26,26 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Edition']);
                 </thead>
                 <tbody>
                     <?php
-                    if (isset($users)) { ?>
-                        <?php foreach ($users as $user) { ?>
-                            <tr>
-                                <td><?= htmlspecialchars(trim($user['id']))  ?></td>
-                                <td><?= htmlspecialchars(trim($user['name'])) ?></td>
-                                <td><?= htmlspecialchars(trim($user['email']))  ?></td>
-                                <td><?= htmlspecialchars(trim($user['password']))  ?></td>
-                                <td><?= htmlspecialchars(trim($user['picture'])) ?></td>
-                                <td><?= htmlspecialchars(trim($user['role']))  ?></td>
-                                <td class="actions">
-                                    <button class="btn btn-edit">
-                                        <a href="/admin/dashboard/users/edit">Editer</a>
+                    if (isset($user)) { ?>
+                        <tr>
+                            <td><?= htmlspecialchars(trim($user['id']))  ?></td>
+                            <td><?= htmlspecialchars(trim($user['name']))  ?></td>
+                            <td><?= htmlspecialchars(trim($user['email'])) ?></td>
+                            <td><?= htmlspecialchars(trim($user['password'])) ?? '' ?></td>
+                            <td>
+                                <p class="clamp">
+                                    <?= htmlspecialchars(trim($user['picture']))  ?>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <?= htmlspecialchars(trim($user['role']))  ?>
+                                </p>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn btn-back">
+                                        <a href="/admin/dashboard/users">Retour</a>
                                     </button>
                                     <form class="delete-form" action="/admin/dashboard/users/delete" method="post">
                                         <input type="hidden" name="_method" value="DELETE">
@@ -46,12 +54,55 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Edition']);
                                             Supprimer
                                         </button>
                                     </form>
-                                </td>
-                            </tr>
-                        <?php  } ?>
+                                </div>
+                            </td>
+                        </tr>
                     <?php } ?>
                 </tbody>
             </table>
+            <style>
+                .form-container {
+                    margin-top: 18px;
+                }
+            </style>
+            <div class="form-container">
+                <?php
+
+                $full_name = explode(' ', $user['name']);
+                $first_name = $full_name[0];
+                $last_name = array_slice($full_name, 1);
+                $last_name = join(' ', $last_name);
+
+                ?>
+                <form action="/admin/dashboard/users/update" method="post">
+                    <h2>Modifications</h2>
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" name="id" value="<?= htmlspecialchars(trim($user['id'])) ?>">
+                    <label for="name">Prenom :</label>
+                    <input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars(trim($first_name)) ?>">
+                    <label for="last_name">Nom :</label>
+                    <input type="text" id="last_name" name="last_name" value="<?= htmlspecialchars(trim($last_name)) ?>">
+                    <?php if ($user['role'] === 'admin') : ?>
+                        <label for="password">Mot de passe :</label>
+                        <input type="text" id="password" name="password"
+                            value="<?= htmlspecialchars(trim($user['password'])) ?>">
+                        <label for="email">Adresse mail :</label>
+                        <input type="email" id="email" name="email" value="<?= htmlspecialchars(trim($user['email'])) ?>">
+                    <?php endif ?>
+                    <?php if ($user['role'] === 'user') : ?>
+                        <input type="hidden" name="password" value="<?= htmlspecialchars(trim($user['password'])) ?>">
+                        <input type="hidden" name="email" value="<?= htmlspecialchars(trim($user['email'])) ?>">
+                    <?php endif ?>
+                    <label for="picture">Photo de profil :</label>
+                    <input type="text" id="picture" name="picture" value="<?= htmlspecialchars(trim($user['picture'])) ?>">
+                    <label for="role">Rôle :</label>
+                    <input type="text" id="role" name="role" value="<?= htmlspecialchars(trim($user['role'])) ?>">
+                    <button class="btn btn-back">
+                        <a href="/admin/dashboard/users">Retour</a>
+                    </button>
+                    <button class="btn btn-add" type="submit">Sauvegarder</button>
+                </form>
+            </div>
         </main>
     </div>
 </body>

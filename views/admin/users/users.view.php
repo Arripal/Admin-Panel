@@ -38,7 +38,7 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
                                 <td><?= htmlspecialchars(trim($user['role']))  ?></td>
                                 <td class="actions">
                                     <button class="btn btn-edit">
-                                        <a href="/admin/dashboard/users/edit">Editer</a>
+                                        <a href="/admin/dashboard/users/edit?id=<?= htmlspecialchars(trim($user['id'])) ?>">Editer</a>
                                     </button>
                                     <form class="delete-form" action="/admin/dashboard/users/delete" method="post">
                                         <input type="hidden" name="_method" value="DELETE">

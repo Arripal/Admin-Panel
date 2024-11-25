@@ -5,7 +5,7 @@ class Validation
 
     private $MIN_LENGTH = 5;
     private $MAX_LENGTH = 255;
-
+    private $roles = ['admin', 'user'];
 
     public function is_valid_password(string $password)
     {
@@ -47,5 +47,15 @@ class Validation
     public function validate_max_length($string)
     {
         return strlen($string) <= $this->MAX_LENGTH;
+    }
+
+    public function is_valid_role($string)
+    {
+        $string = trim($string);
+        $string = strtolower($string);
+
+        $is_valid = array_search($string, $this->roles, true);
+
+        return $is_valid !== false ? true : false;
     }
 }
