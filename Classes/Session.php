@@ -16,10 +16,8 @@ class Session
     }
     public function close_session()
     {
-
         $this->empty();
         session_unset();
-
         session_destroy();
     }
 

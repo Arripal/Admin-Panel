@@ -9,6 +9,7 @@ $session = new Session();
 $db = new Database($db_config);
 $validation = new Validation();
 $auth = new Authentification($db);
+
 $auth->verify_admin_access();
 
 $updated_logement_data = $_POST;
@@ -60,5 +61,3 @@ try {
 } finally {
     $db->close_connexion();
 }
-
-//TODO : Afficher via les sessions les messages d'erreurs

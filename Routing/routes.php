@@ -8,6 +8,8 @@ $router->post('/admin/login', '/admin/login.php');
 $router->get('/admin/dashboard', '/admin/dashboard.php');
 $router->get('/admin/dashboard/not_found', '/admin/not_found.php');
 $router->get('/admin/dashboard/users', '/admin/users/show.php');
+$router->get('/admin/dashboard/users/add', '/admin/users/add.php');
+$router->post('/admin/dashboard/users/save', '/admin/users/save.php');
 $router->get('/admin/dashboard/users/edit', '/admin/users/edit.php');
 $router->put('/admin/dashboard/users/update', '/admin/users/update.php');
 $router->delete('/admin/dashboard/users/delete', '/admin/users/delete.php');

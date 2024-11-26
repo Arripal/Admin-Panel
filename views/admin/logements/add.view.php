@@ -22,6 +22,8 @@ access_view('/components/head.view', ['title' => 'Logements']);
                     <h2>Ajout d'un logement</h2>
                     <label for="title">Titre:</label>
                     <input type="text" id="title" name="title" placeholder="Ajouter un titre">
+                    <label for="host">Adresse mail propriétaire :</label>
+                    <input type="email" id="host" name="host" placeholder="Ajouter un propriétaire">
                     <label for="description">Description:</label>
                     <textarea id="description" name="description" placeholder="Ajouter une description">  </textarea>
                     <label for="location">Localisation:</label>
@@ -32,7 +34,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         <label for="new-photo">Ajouter des photos :</label>
                         <div class="item-input">
                             <input type="text" id="new-photo" placeholder="Nouvelle photo">
-                            <button class="btn btn-add" type="button" onclick="add_item('pictures','photo')">Ajouter</button>
+                            <button class="btn btn-ajout-form" type="button" onclick="add_item('pictures','photo')">Ajouter</button>
 
                         </div>
                         <ul class="add-list" id="pictures">
@@ -43,7 +45,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         <label for="new-equipment">Ajouter des équipements:</label>
                         <div class="item-input">
                             <input type="text" id="new-equipment" placeholder="Nouvel équipement">
-                            <button class="btn btn-add" type="button" onclick="add_item('equipments','equipment')">Ajouter</button>
+                            <button class="btn btn-ajout-form" type="button" onclick="add_item('equipments','equipment')">Ajouter</button>
                         </div>
                         <ul class="add-list" id="equipments"></ul>
                     </div>
@@ -51,11 +53,14 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         <label for="new-tag">Ajouter des tags:</label>
                         <div class="item-input">
                             <input type="text" id="new-tag" placeholder="Nouveau tag">
-                            <button class="btn btn-add" type="button" onclick="add_item('tags','tag')">Ajouter</button>
+                            <button class="btn btn-ajout-form" type="button" onclick="add_item('tags','tag')">Ajouter</button>
                         </div>
                     </div>
                     <ul class="add-list" id="tags"></ul>
-                    <button class="btn btn-add" type="submit">Ajouter le logement</button>
+                    <button class="btn btn-back">
+                        <a href="/admin/dashboard/logements">Retour</a>
+                    </button>
+                    <button class="btn btn-add" type="submit">Ajouter</button>
                 </form>
                 <script>
                     function add_item(items, item) {
@@ -67,7 +72,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             li.innerHTML = `
                     ${newItemInput.value}
                     <input type="hidden" name="${items}[]" value="${newItemInput.value}">
-                    <button type="button" onclick="this.parentElement.remove()">Supprimer</button>
+                    <button type="button" class="btn btn-delete" onclick="this.parentElement.remove()">Supprimer</button>
                 `;
                             itemsList.appendChild(li);
                             newItemInput.value = '';

@@ -1,11 +1,8 @@
 <?php
-access_view('/components/head.view', ['title' => 'Erreur']);
+access_view('/components/head.view', ['title' => 'Ressource introuvable']);
 ?>
 
 <body>
-    <style>
-
-    </style>
     <?php
     access_view('/components/header.view');
     ?>

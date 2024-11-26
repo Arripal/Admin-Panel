@@ -23,10 +23,13 @@ try {
         die();
     }
 
-    $db->db_query('DELETE FROM public.user WHERE id = :id', [
-        'id' => $data['user_id']
+    $db->db_query('DELETE FROM public.user WHERE email = :email', [
+        'email' => $corresponding_user['email']
     ]);
 
+    $db->db_query('DELETE FROM public.logements WHERE host = :host', [
+        'host' => $corresponding_user['email']
+    ]);
     redirect_to('/admin/dashboard/users');
 } catch (PDOException $e) {
     throw $e;

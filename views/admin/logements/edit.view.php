@@ -95,7 +95,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         <label for="new-item">Ajouter des équipements:</label>
                         <div class="item-input">
                             <input type="text" id="new-item" placeholder="Nouvel équipement">
-                            <button class="btn btn-add" type="button" onclick="add_item()">Ajouter</button>
+                            <button class="btn btn-ajout-form" type="button" onclick="add_item()">Ajouter</button>
                         </div>
                         <ul id="equipments" class="equipments">
                             <?php
@@ -105,14 +105,17 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             $equipments_array = explode(',', $equipment);
                             ?>
                             <?php foreach ($equipments_array as $equipment): ?>
-                                <li>
-                                    <?= $equipment ?>
+                                <li class="equipment-li">
+                                    <p><?= $equipment ?></p>
                                     <input type="hidden" name="equipments[]" value="<?= $equipment ?>">
-                                    <button type="button" onclick="this.parentElement.remove()">Supprimer</button>
+                                    <button type="button" class="btn btn-delete" onclick="this.parentElement.remove()">Supprimer</button>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
+                    <button class="btn btn-back">
+                        <a href="/admin/dashboard/logements">Retour</a>
+                    </button>
                     <button class="btn btn-add" type="submit">Sauvegarder</button>
                 </form>
                 <script>
@@ -124,7 +127,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             li.innerHTML = `
                     ${newItemInput.value}
                     <input type="hidden" name="equipments[]" value="${newItemInput.value}">
-                    <button type="button" onclick="this.parentElement.remove()">Supprimer</button>
+                    <button type="button" class="btn btn-ajout-form" onclick="this.parentElement.remove()">Supprimer</button>
                 `;
                             itemsList.appendChild(li);
                             newItemInput.value = '';

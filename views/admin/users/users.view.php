@@ -13,11 +13,13 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
         <main class="content">
             <?php
             if (isset($users)) { ?>
-                <h2>Liste des utilisateurs</h2>
+                <div class="add">
+                    <h2>Liste des utilisateurs</h2>
+                    <button class="btn"><a href="/admin/dashboard/users/add">Ajouter un utilisateur</a></button>
+                </div>
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Nom</th>
                             <th>Email</th>
                             <th>Mot de passe</th>
@@ -30,7 +32,6 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
 
                         <?php foreach ($users as $user) { ?>
                             <tr>
-                                <td><?= htmlspecialchars(trim($user['id']))  ?></td>
                                 <td><?= htmlspecialchars(trim($user['name'])) ?></td>
                                 <td><?= htmlspecialchars(trim($user['email']))  ?></td>
                                 <td><?= htmlspecialchars(trim($user['password']))  ?></td>

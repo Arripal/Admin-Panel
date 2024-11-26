@@ -3,57 +3,65 @@ require('./Classes/Validation.php');
 require('./Classes/Authentification.php');
 require('./Classes/Database.php');
 require('./Classes/Session.php');
+require('./Classes/Crypt.php');
 $db_config = require('./db_config.php');
 
-$session = new Session();
+$crypt = new Crypt();
 $db = new Database($db_config);
 $validation = new Validation();
+$auth = new Authentification($db);
 
 $auth->verify_admin_access();
 
-$updated_user_data = $_POST;
+$user_data = $_POST;
 
-$corresponding_logement = $db->fetch('SELECT * FROM public.user WHERE id = :id', [
-    'id' => $updated_user_data['id']
-]);
+$is_valid_url = $validation->is_valid_URL($user_data['picture']);
+$is_valid_email = $validation->is_valid_email($user_data['email']);
+$is_valid_password = $validation->is_valid_password($user_data['password']);
+$is_valid_role = $validation->is_valid_role($user_data['role']);
 
-if (empty($corresponding_logement)) {
-    $session->set_message('empty', 'Aucun utilisateur correspondant à votre demande.');
-    redirect_to("location:javascript://history.go(-1)");
+
+
+
+if (!$is_valid_url || !$is_valid_email || !$is_valid_password || !$is_valid_role) {
+    redirect_to('/admin/dashboard/not_found');
+    die();
 }
 
-$is_valid_last_name = $validation->is_valid_length($updated_user_data['last_name']);
-$is_valid_first_name = $validation->is_valid_length($updated_user_data['first_name']);
-$is_valid_url = $validation->is_valid_URL($updated_user_data['cover']);
-$is_valid_email = $validation->is_valid_email($updated_user_data['email']);
-$is_valid_password = $validation->is_valid_password($updated_user_data['password']);
-$is_valid_role = $validation->is_valid_role($updated_user_data['role']);
+$user = $db->fetch("SELECT * FROM public.user WHERE email= :email ", [
+    'email' => $user_data['email']
+]);
 
-if (!$is_valid_last_name || !$is_valid_first_name || !$is_valid_url || !$is_valid_email || !$is_valid_password || !$is_valid_role) {
-    redirect_to("location:javascript://history.go(-1)");
+if ($user) {
+    echo 'EXISTE';
     die();
 }
 
 try {
 
-    $full_name = $updated_user_data['first_name'] . ' ' . $updated_user_data['last_name'];
-    //bcrypt password
+    $full_name = $user_data['first_name'] . ' ' . $user_data['last_name'];
+    $hashed_password = $crypt->password_encryption($user_data['password']);
 
     $db->db_query(
-        'UPDATE public.logements SET 
-                name = :name,
-                password = :password,
-                email = :email,
-                picture = :picture,
-                role = :role
-            WHERE id = :id',
+        'INSERT INTO public.user (
+            name,
+            password,
+            email,
+            picture,
+            role
+        ) VALUES (
+            :name,
+            :password,
+            :email,
+            :picture,
+            :role
+         )',
         [
-            'id' => strip_tags($updated_user_data['id']),
             'name' => strip_tags($full_name),
-            'password' => strip_tags($updated_user_data['passwors']),
-            'email' => strip_tags($updated_user_data['email']),
-            'picture' => strip_tags($updated_user_data['picture']),
-            'role' => strip_tags($updated_user_data['role']),
+            'password' => strip_tags($hashed_password),
+            'email' => strip_tags($user_data['email']),
+            'picture' => strip_tags($user_data['picture']),
+            'role' => strip_tags($user_data['role']),
         ]
     );
 

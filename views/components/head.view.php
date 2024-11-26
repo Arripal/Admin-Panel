@@ -80,17 +80,24 @@
         .btn-add {
             background-color: #4CAF50;
             color: white;
-            margin-top: 10px;
+            font-size: 15px;
+            border: 1px solid #4CAF50;
+        }
+
+        .btn-ajout-form {
+            background-color: #007bff;
+            color: white;
         }
 
         .btn-back {
             background-color: white;
             border: #2d3748 1px solid;
 
+
         }
 
         .btn-back a {
-            color: #0056b3;
+            color: black !important;
             text-decoration: none;
         }
 
@@ -224,6 +231,8 @@
         }
 
         input[type="text"],
+        input[type='email'],
+        input[type='password'],
         textarea {
             width: 100%;
             padding: 0.5rem;
@@ -239,22 +248,21 @@
             resize: vertical;
         }
 
-        .button-add {
-            display: block;
-            width: 100%;
-            padding: 0.75rem;
-            margin-top: 1.5rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.2s;
+        .add {
+            margin-bottom: 20px;
         }
 
-        .button-add:hover {
-            background-color: #0056b3;
+        .add button {
+            width: fit-content;
+            padding: 8px 12px;
+            background-color: #007bff;
+        }
+
+        .btn a {
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
         }
 
         .item-list {
@@ -290,6 +298,14 @@
             background-color: #f8f8f8;
             margin-bottom: 0.5rem;
             border-radius: 4px;
+        }
+
+        .equipment-li {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
         }
 
         @media (max-width: 768px) {

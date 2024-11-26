@@ -27,12 +27,15 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Ajout']);
                     <label for="email">Email :</label>
                     <input type="email" id="email" name="email" placeholder="Ajouter une adresse mail">
                     <label for="password">Mot de passe :</label>
-                    <input type="password" id="password" name="password" placeholder="Ajouter une image de couverture">
-                    <label for="cover">Photo de profil :</label>
-                    <input type="text" id="cover" name="cover" placeholder="Ajouter une image de couverture">
+                    <input type="password" id="password" name="password" placeholder="Ajouter un mot de passe">
+                    <label for="picture">Photo de profil :</label>
+                    <input type="text" id="picture" name="picture" placeholder="Ajouter une photo de profil">
                     <label for="role">Rôle :</label>
                     <input type="text" id="role" name="role" placeholder="Ajouter un rôle">
-                    <button class="btn btn-add" type="submit">Ajouter l'utilisateur</button>
+                    <button class="btn btn-back">
+                        <a href="/admin/dashboard/users">Retour</a>
+                    </button>
+                    <button class="btn btn-add" type="submit">Ajouter</button>
                 </form>
             </div>
         </main>

@@ -13,11 +13,14 @@ access_view('/components/head.view', ['title' => 'Logements']);
         <main class="content">
             <?php
             if (isset($logements)) { ?>
-                <h2>Liste des logements</h2>
+                <div class="add">
+                    <h2>Liste des logements</h2>
+                    <button class="btn"><a href="/admin/dashboard/logements/add">Ajouter un logement</a></button>
+                </div>
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+
                             <th>Nom</th>
                             <th>Hôte</th>
                             <th>Localisation</th>
@@ -30,7 +33,6 @@ access_view('/components/head.view', ['title' => 'Logements']);
                     <tbody>
                         <?php foreach ($logements as $logement) { ?>
                             <tr>
-                                <td><?= htmlspecialchars(trim($logement['id']))  ?></td>
                                 <td><?= htmlspecialchars(trim($logement['title']))  ?></td>
                                 <td><?= htmlspecialchars(trim($logement['host'])) ?></td>
                                 <td><?= htmlspecialchars(trim($logement['location'])) ?></td>

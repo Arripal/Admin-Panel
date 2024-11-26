@@ -35,6 +35,7 @@ class Authentification
     {
         $this->session->start_session();
         if (!isset($_SESSION['admin_id']) || $_SESSION['role'] !== 'admin') {
+
             $this->session->close_session();
 
             redirect_to('/admin/login');
