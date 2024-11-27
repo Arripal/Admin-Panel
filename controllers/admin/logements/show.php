@@ -1,16 +1,10 @@
 <?php
-require('./Classes/Session.php');
-require('./Classes/Database.php');
-require('./Classes/Authentification.php');
-
+require_once('./Classes/Database.php');
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
-$auth = new Authentification($db);
 
 $errors = [];
 $logements = null;
-
-$auth->verify_admin_access();
 
 try {
 
@@ -24,7 +18,6 @@ try {
 } finally {
     $db->close_connexion();
 }
-
 
 if (!empty($logements)) {
     uasort($logements, function ($a, $b) {

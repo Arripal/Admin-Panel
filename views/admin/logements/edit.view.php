@@ -113,10 +113,12 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             <?php endforeach; ?>
                         </ul>
                     </div>
-                    <button class="btn btn-back">
-                        <a href="/admin/dashboard/logements">Retour</a>
-                    </button>
-                    <button class="btn btn-add" type="submit">Sauvegarder</button>
+                    <div class="form-btns">
+                        <button class="btn btn-back">
+                            <a href="/admin/dashboard/logements">Retour</a>
+                        </button>
+                        <button class="btn btn-add" type="submit">Sauvegarder</button>
+                    </div>
                 </form>
                 <script>
                     function add_item() {
@@ -127,7 +129,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             li.innerHTML = `
                     ${newItemInput.value}
                     <input type="hidden" name="equipments[]" value="${newItemInput.value}">
-                    <button type="button" class="btn btn-ajout-form" onclick="this.parentElement.remove()">Supprimer</button>
+                    <button type="button" class="btn btn-delete" onclick="this.parentElement.remove()">Supprimer</button>
                 `;
                             itemsList.appendChild(li);
                             newItemInput.value = '';

@@ -1,9 +1,9 @@
 <?php
 
-$router->get('/logements', '/logements/show.php');
-
-$router->get('/admin/login', '/admin/login_form.php');
-$router->post('/admin/login', '/admin/login.php');
+$router->get('/logements', '/logements/show.php', false);
+$router->get('/admin/login', '/admin/login_form.php', false);
+$router->post('/admin/login', '/admin/login.php', false);
+$router->get('/not_found', '/admin/not_found.php', false);
 
 $router->get('/admin/dashboard', '/admin/dashboard.php');
 $router->get('/admin/dashboard/not_found', '/admin/not_found.php');

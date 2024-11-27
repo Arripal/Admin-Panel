@@ -1,17 +1,11 @@
 <?php
-require('./Classes/Validation.php');
-require('./Classes/Authentification.php');
-require('./Classes/Database.php');
-require('./Classes/Session.php');
-require('./Classes/Crypt.php');
+require_once('./Classes/Validation.php');
+require_once('./Classes/Database.php');
+require_once('./Classes/Crypt.php');
 $db_config = require('./db_config.php');
-
 $crypt = new Crypt();
 $db = new Database($db_config);
 $validation = new Validation();
-$auth = new Authentification($db);
-
-$auth->verify_admin_access();
 
 $user_data = $_POST;
 
@@ -19,9 +13,6 @@ $is_valid_url = $validation->is_valid_URL($user_data['picture']);
 $is_valid_email = $validation->is_valid_email($user_data['email']);
 $is_valid_password = $validation->is_valid_password($user_data['password']);
 $is_valid_role = $validation->is_valid_role($user_data['role']);
-
-
-
 
 if (!$is_valid_url || !$is_valid_email || !$is_valid_password || !$is_valid_role) {
     redirect_to('/admin/dashboard/not_found');

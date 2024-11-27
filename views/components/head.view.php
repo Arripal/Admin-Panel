@@ -82,6 +82,7 @@
             color: white;
             font-size: 15px;
             border: 1px solid #4CAF50;
+            width: fit-content;
         }
 
         .btn-ajout-form {
@@ -99,6 +100,10 @@
         .btn-back a {
             color: black !important;
             text-decoration: none;
+        }
+
+        .form-btns {
+            margin-top: 15px;
         }
 
         :root {

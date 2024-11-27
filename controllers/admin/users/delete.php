@@ -1,10 +1,6 @@
 <?php
-
-require('./Classes/Database.php');
-require('./Classes/Session.php');
+require_once('./Classes/Database.php');
 $db_config = require('./db_config.php');
-
-$session = new Session();
 $db = new Database($db_config);
 
 $data = $_POST;

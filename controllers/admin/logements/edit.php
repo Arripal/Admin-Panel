@@ -1,18 +1,11 @@
 <?php
-
-require('./Classes/Session.php');
-require('./Classes/Database.php');
-require('./Classes/Authentification.php');
-
+require_once('./Classes/Database.php');
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
-$auth = new Authentification($db);
 
 $logement_id = $_GET['id'];
 $errors = [];
 $logement = null;
-
-$auth->verify_admin_access();
 
 try {
 
@@ -34,8 +27,6 @@ try {
 } finally {
     $db->close_connexion();
 }
-
-
 
 access_view('/admin/logements/edit.view', [
     'logement' => $logement

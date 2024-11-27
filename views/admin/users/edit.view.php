@@ -82,14 +82,14 @@ access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
                     <input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars(trim($first_name)) ?>">
                     <label for="last_name">Nom :</label>
                     <input type="text" id="last_name" name="last_name" value="<?= htmlspecialchars(trim($last_name)) ?>">
-                    <?php if ($user['role'] === 'admin') : ?>
+                    <?php if (strtolower($user['role']) === 'admin') : ?>
                         <label for="password">Mot de passe :</label>
                         <input type="text" id="password" name="password"
                             value="<?= htmlspecialchars(trim($user['password'])) ?>">
                         <label for="email">Adresse mail :</label>
                         <input type="email" id="email" name="email" value="<?= htmlspecialchars(trim($user['email'])) ?>">
                     <?php endif ?>
-                    <?php if ($user['role'] === 'user') : ?>
+                    <?php if (strtolower($user['role']) === 'user') : ?>
                         <input type="hidden" name="password" value="<?= htmlspecialchars(trim($user['password'])) ?>">
                         <input type="hidden" name="email" value="<?= htmlspecialchars(trim($user['email'])) ?>">
                     <?php endif ?>
@@ -97,10 +97,12 @@ access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
                     <input type="text" id="picture" name="picture" value="<?= htmlspecialchars(trim($user['picture'])) ?>">
                     <label for="role">Rôle :</label>
                     <input type="text" id="role" name="role" value="<?= htmlspecialchars(trim($user['role'])) ?>">
-                    <button class="btn btn-back">
-                        <a href="/admin/dashboard/users">Retour</a>
-                    </button>
-                    <button class="btn btn-add" type="submit">Sauvegarder</button>
+                    <div class="form-btns">
+                        <button class="btn btn-back">
+                            <a href="/admin/dashboard/users">Retour</a>
+                        </button>
+                        <button class="btn btn-add" type="submit">Sauvegarder</button>
+                    </div>
                 </form>
             </div>
         </main>

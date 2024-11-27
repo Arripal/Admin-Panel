@@ -55,8 +55,9 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             <input type="text" id="new-tag" placeholder="Nouveau tag">
                             <button class="btn btn-ajout-form" type="button" onclick="add_item('tags','tag')">Ajouter</button>
                         </div>
+                        <ul class="add-list" id="tags"></ul>
                     </div>
-                    <ul class="add-list" id="tags"></ul>
+
                     <button class="btn btn-back">
                         <a href="/admin/dashboard/logements">Retour</a>
                     </button>
@@ -69,6 +70,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         const itemsList = document.getElementById(`${items}`);
                         if (newItemInput.value.trim() !== '') {
                             const li = document.createElement('li');
+                            li.classList.add('equipment-li');
                             li.innerHTML = `
                     ${newItemInput.value}
                     <input type="hidden" name="${items}[]" value="${newItemInput.value}">

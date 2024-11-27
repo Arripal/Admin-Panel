@@ -1,15 +1,9 @@
 <?php
-require('./Classes/Validation.php');
-require('./Classes/Authentification.php');
-require('./Classes/Database.php');
-require('./Classes/Session.php');
+require_once('./Classes/Validation.php');
+require_once('./Classes/Database.php');
 $db_config = require('./db_config.php');
-
 $db = new Database($db_config);
 $validation = new Validation();
-$auth = new Authentification($db);
-
-$auth->verify_admin_access();
 
 $updated_user_data = $_POST;
 
@@ -25,11 +19,11 @@ $is_valid_password;
 $is_valid_url = $validation->is_valid_URL($updated_user_data['picture']);
 $is_valid_email = $validation->is_valid_email($updated_user_data['email']);
 $is_valid_role = $validation->is_valid_role($updated_user_data['role']);
-
-if ($updated_user_data['role'] === 'admin') {
+/*
+if ($updated_user_data['role'] === strtoupper('admin')) {
     $is_valid_password =  $validation->is_valid_password($updated_user_data['password']);
 }
-
+*/
 if (!$is_valid_url || !$is_valid_email  || !$is_valid_role) {
     redirect_to("location:javascript://history.go(-1)");
     die();

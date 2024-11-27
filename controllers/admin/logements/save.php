@@ -1,16 +1,9 @@
 <?php
-
-require('./Classes/Session.php');
-require('./Classes/Database.php');
-require('./Classes/Authentification.php');
-require('./Classes/Validation.php');
-
+require_once('./Classes/Database.php');
+require_once('./Classes/Validation.php');
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
-$auth = new Authentification($db);
 $validation = new Validation();
-
-$auth->verify_admin_access();
 
 $logement_data_to_add = $_POST;
 

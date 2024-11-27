@@ -32,10 +32,12 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Ajout']);
                     <input type="text" id="picture" name="picture" placeholder="Ajouter une photo de profil">
                     <label for="role">Rôle :</label>
                     <input type="text" id="role" name="role" placeholder="Ajouter un rôle">
-                    <button class="btn btn-back">
-                        <a href="/admin/dashboard/users">Retour</a>
-                    </button>
-                    <button class="btn btn-add" type="submit">Ajouter</button>
+                    <div class="form-btns">
+                        <button class="btn btn-back">
+                            <a href="/admin/dashboard/users">Retour</a>
+                        </button>
+                        <button class="btn btn-add" type="submit">Ajouter</button>
+                    </div>
                 </form>
             </div>
         </main>

@@ -1,18 +1,14 @@
 <?php
-
-require('./Classes/Session.php');
-require('./Classes/Database.php');
-require('./Classes/Authentification.php');
-
+require_once('./Classes/Database.php');
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
-$auth = new Authentification($db);
+
 
 $user_id = $_GET['id'];
 $errors = [];
 $user = null;
 
-$auth->verify_admin_access();
+
 
 try {
 

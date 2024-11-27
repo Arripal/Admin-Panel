@@ -1,16 +1,16 @@
 <?php
 require('./Classes/Validation.php');
-require('./Classes/Database.php');
-require('./Classes/Authentification.php');
-require('./Classes/Session.php');
 require('./Classes/Crypt.php');
+require_once('./Classes/Database.php');
+require_once('./Classes/Authentification.php');
 $db_config = require('./db_config.php');
-
 $session = new Session();
-$db = new Database($db_config);
 $validation = new Validation();
+$db = new Database($db_config);
 $auth = new Authentification($db);
 $crypt = new Crypt();
+
+
 $email = $_POST['email'];
 $password = $_POST['password'];
 
@@ -46,8 +46,8 @@ if (!$matching_passwords) {
 }
 
 $session->create_session([
-    'role' => $existing_admin['role'],
-    'admin_id' => $existing_admin['id']
+    'role' => $existing_user['role'],
+    'admin_id' => $existing_user['id']
 ]);
 
 redirect_to('/admin/dashboard');
