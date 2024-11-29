@@ -2,7 +2,6 @@
 
 class Authentification
 {
-
     private $session;
 
     public function __construct()
@@ -13,10 +12,10 @@ class Authentification
     public function verify_admin_access()
     {
         $this->session->start_session();
-        if (!isset($_SESSION['admin_id']) || $_SESSION['role'] !== 'ADMIN') {
+        if (!isset($_SESSION['admin_id']) || $_SESSION['role'] !== 'admin') {
             $this->session->close_session();
-
             redirect_to('/admin/login');
         }
+        return true;
     }
 }

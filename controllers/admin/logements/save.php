@@ -7,13 +7,22 @@ $validation = new Validation();
 
 $logement_data_to_add = $_POST;
 
-$is_valid_title = $validation->is_valid_length($logement_data_to_add['title']);
-$is_valid_location = $validation->is_valid_length($logement_data_to_add['location']);
-$is_valid_description = $validation->is_valid_length($logement_data_to_add['description']);
-$is_valid_url = $validation->is_valid_URL($logement_data_to_add['cover']);
+$validation->validate('title', $logement_data_to_add['title'], ['min', 'max', 'required']);
+$validation->validate('location', $logement_data_to_add['location'], ['min', 'max', 'required']);
+$validation->validate('description', $logement_data_to_add['description'], ['min', 'max', 'required']);
+$validation->validate('cover', $logement_data_to_add['cover'], ['url', 'required']);
+$validation->validate('host', $logement_data_to_add['host'], ['email', 'required']);
+$validation->validate('tags', $logement_data_to_add['tags'], ['arraystrs']);
+$validation->validate('pictures', $logement_data_to_add['pictures'], ['arraystrs']);
+$validation->validate('equipments', $logement_data_to_add['equipments'], ['arraystrs']);
+$is_valid = $validation->is_valid();
 
-if (!$is_valid_location || !$is_valid_title || !$is_valid_url || !$is_valid_description) {
-    redirect_to('/admin/dashboard/not_found');
+if (!$is_valid) {
+    $errors = $validation->get_errors();
+    access_view('admin/login.view', [
+        'errors' => $errors
+    ]);
+    die();
 }
 
 $user = $db->fetch("SELECT * FROM public.user WHERE email= :email ", [

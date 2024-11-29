@@ -16,12 +16,19 @@ if (empty($corresponding_logement)) {
     redirect_to("location:javascript://history.go(-1)");
 }
 
-$is_valid_title = $validation->is_valid_length($updated_logement_data['title']);
-$is_valid_location = $validation->is_valid_length($updated_logement_data['location']);
-$is_valid_url = $validation->is_valid_URL($updated_logement_data['cover']);
+$validation->validate('title', $logement_data_to_add['title'], ['min', 'max', 'required']);
+$validation->validate('location', $logement_data_to_add['location'], ['min', 'max', 'required']);
+$validation->validate('description', $logement_data_to_add['description'], ['min', 'max', 'required']);
+$validation->validate('cover', $logement_data_to_add['cover'], ['url', 'required']);
+$validation->validate('host', $logement_data_to_add['host'], ['email', 'required']);
+$validation->validate('tags', $logement_data_to_add['tags'], ['arraystrs']);
+$validation->validate('pictures', $logement_data_to_add['pictures'], ['arraystrs']);
+$valid_equipments = $validation->validate('equipments', $logement_data_to_add['equipments'], ['arraystrs']);
+$is_valid = $validation->is_valid();
 
-if (!$is_valid_location || !$is_valid_title || !$is_valid_url) {
-    redirect_to("location:javascript://history.go(-1)");
+if (!$is_valid) {
+    $errors = $validation->get_errors();
+    redirect_to('/admin/dashboard/logements/edit');
     die();
 }
 
@@ -44,7 +51,6 @@ try {
             'cover' => $updated_logement_data['cover'],
             'description' => strip_tags($updated_logement_data['description']),
             'equipments' => $equipments_db
-
         ]
     );
 

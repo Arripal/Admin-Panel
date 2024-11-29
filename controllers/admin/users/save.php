@@ -9,10 +9,10 @@ $validation = new Validation();
 
 $user_data = $_POST;
 
-$is_valid_url = $validation->is_valid_URL($user_data['picture']);
-$is_valid_email = $validation->is_valid_email($user_data['email']);
-$is_valid_password = $validation->is_valid_password($user_data['password']);
-$is_valid_role = $validation->is_valid_role($user_data['role']);
+$validation->validate('picture', $user_data['picture'], ['required', 'url']);
+$validation->validate('email', $user_data['email'], ['email', 'required']);
+$validation->validate('password', $user_data['password'], ['required', 'password']);
+$validation->validate('role', $user_data['role'], ['role']);
 
 if (!$is_valid_url || !$is_valid_email || !$is_valid_password || !$is_valid_role) {
     redirect_to('/admin/dashboard/not_found');

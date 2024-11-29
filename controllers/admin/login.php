@@ -7,27 +7,32 @@ $db_config = require('./db_config.php');
 $session = new Session();
 $validation = new Validation();
 $db = new Database($db_config);
-$auth = new Authentification($db);
+$auth = new Authentification();
 $crypt = new Crypt();
-
 
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$are_valid_inputs = $validation->is_valid_email($email) && $validation->is_valid_password($password);
+$validation->validate('email', $email, ['email', 'required']);
+$validation->validate('password', $password, ['password', 'required']);
+$is_valid = $validation->is_valid();
 
-if (!$are_valid_inputs) {
+if (!$is_valid) {
+    $errors = $validation->get_errors();
+
     access_view('admin/login.view', [
-        'invalid' => 'Les identifiants fournis sont incorrects.'
+        'errors' => $errors
     ]);
     die();
 }
+
+//$validation->clear();
 
 $existing_user = $db->fetch('SELECT * FROM public.user WHERE email = :email', [
     'email' => $email,
 ]);
 
-if (!$existing_user || $existing_user['role'] !== 'ADMIN') {
+if (!$existing_user || $existing_user['role'] !== 'admin') {
 
     access_view('admin/login.view', [
         'invalid' => 'Les identifiants fournis sont incorrects.'

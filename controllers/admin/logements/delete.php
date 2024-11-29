@@ -3,7 +3,6 @@
 require('./Classes/Database.php');
 require('./Classes/Session.php');
 $db_config = require('./db_config.php');
-
 $session = new Session();
 $db = new Database($db_config);
 

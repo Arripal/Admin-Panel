@@ -3,12 +3,9 @@ require_once('./Classes/Database.php');
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
 
-
 $user_id = $_GET['id'];
 $errors = [];
 $user = null;
-
-
 
 try {
 
@@ -30,8 +27,6 @@ try {
 } finally {
     $db->close_connexion();
 }
-
-
 
 access_view('/admin/users/edit.view', [
     'user' => $user
