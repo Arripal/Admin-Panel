@@ -43,7 +43,7 @@ class Validation
         }
     }
 
-    public function minlength($value)
+    private function minlength($value)
     {
         if (!is_string($value)) {
             return $this->errors["{$this->name}-type"] = "Le champ {$this->name} n'est pas du type requis.";
@@ -56,7 +56,7 @@ class Validation
     }
 
 
-    public function maxlength($value)
+    private function maxlength($value)
     {
         if (!is_string($value)) {
             return  $this->errors["{$this->name}-type"] = "Le champ {$this->name} n'est pas du type requis.";
@@ -69,7 +69,7 @@ class Validation
         return true;
     }
 
-    public function is_email($value)
+    private function is_email($value)
     {
         $email_valid = filter_var($value, FILTER_VALIDATE_EMAIL);
         if (!$email_valid) {
@@ -78,7 +78,7 @@ class Validation
         return true;
     }
 
-    public function is_url($value)
+    private function is_url($value)
     {
         if (!filter_var($value, FILTER_VALIDATE_URL)) {
             return $this->errors["{$this->name}-URL"] = "L'url est invalide. ";
@@ -86,7 +86,7 @@ class Validation
         return true;
     }
 
-    public function is_required($value)
+    private function is_required($value)
     {
         if ($value == '' || $value == null) {
             return $this->errors["{$this->name}-required"] = "Le champ {$this->name} est requis. ";
@@ -94,7 +94,7 @@ class Validation
         return true;
     }
 
-    public function is_password($value)
+    private function is_password($value)
     {
         $pattern = '/^.{5,}$/';
         $password_valid = preg_match($pattern, $value);
@@ -105,7 +105,7 @@ class Validation
         return true;
     }
 
-    public function is_array_of_string($value)
+    private function is_array_of_string($value)
     {
         if (!is_array($value)) {
             return $this->errors['array-type'] = "La valeur passée n'est pas un tableau";
