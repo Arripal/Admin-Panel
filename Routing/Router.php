@@ -3,74 +3,67 @@
 class Router
 {
     private $routes = [];
-    private $protected_paths = [
-        ['admin' => '/admin/dashboard']
-    ];
 
-    private function add_route($url, $controller, $method,)
+    private function add_route($url, $controller, $method, $secured)
     {
         $this->routes[] = [
             'url' => $url,
             'controller' => $controller,
             'method' => $method,
+            'secured' => $secured
 
         ];
         return $this;
     }
 
 
-    public function get($url, $controller,)
+    public function get($url, $controller, $secured = true)
     {
-        return $this->add_route($url, $controller, 'GET');
+        return $this->add_route($url, $controller, 'GET', $secured);
     }
 
-    public function delete($url, $controller,)
+    public function delete($url, $controller, $secured = true)
     {
-        return $this->add_route($url, $controller, 'DELETE');
+        return $this->add_route($url, $controller, 'DELETE', $secured);
     }
 
-    public function put($url, $controller,)
+    public function put($url, $controller, $secured = true)
     {
-        return $this->add_route($url, $controller, 'PUT');
+        return $this->add_route($url, $controller, 'PUT', $secured);
     }
 
-    public function post($url, $controller,)
+    public function post($url, $controller, $secured = true)
     {
-        return $this->add_route($url, $controller, 'POST');
+        return $this->add_route($url, $controller, 'POST', $secured);
     }
 
 
-    private function current_route($url, $method)
+    public function current_route($url, $method)
     {
         $route = current(array_filter($this->routes, function ($route) use ($url, $method) {
             return $route['url'] == $url && $route['method'] == strtoupper($method);
         }));
+
+        if (!$route) {
+            return null;
+        }
+
         return $route;
+    }
+
+    public function is_secured_route($route)
+    {
+        return $route['secured'];
     }
 
     public function use_route($url, $method)
     {
-
         $route = $this->current_route($url, $method);
 
-
         if (!$route) {
-            throw new RouterException("Impossible d'accéder à votre requête", 500);
+            throw new Exception("Impossible d'accéder à votre requête", 500);
         }
 
         return require(__DIR__ . '../../controllers' . $route['controller']);
-    }
-
-    public function is_protected_path($url_path)
-    {
-        $protected_paths = $this->protected_paths;
-
-        $protected = array_map(function ($path) use ($url_path) {
-            foreach ($path as $role => $path) {
-                return str_starts_with($url_path, $path);
-            }
-        }, $protected_paths);
-
-        return $protected[0];
     }
 }

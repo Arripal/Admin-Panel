@@ -45,11 +45,13 @@
             </div>
         </div>
     </form>
-    <?php if (!empty($invalid)): ?>
+    <?php if (!empty($errors)): ?>
         <div class="error">
-            <p>
-                <?php echo $invalid; ?>
-            </p>
+            <?php foreach ($errors as $key => $value) : ?>
+                <p>
+                    <?= htmlspecialchars($value)  ?>
+                </p>
+            <?php endforeach ?>
         </div>
     <?php endif; ?>
 </body>

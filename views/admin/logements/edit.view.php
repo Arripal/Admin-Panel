@@ -59,9 +59,13 @@ access_view('/components/head.view', ['title' => 'Logements']);
                                     <button class="btn btn-back">
                                         <a href="/admin/dashboard/logements">Retour</a>
                                     </button>
-                                    <button class="btn btn-delete">
-                                        <a href="/admin/logements/delete/" <?= htmlspecialchars(trim($logement['id'])) ?>>Supprimer</a>
-                                    </button>
+                                    <form class="delete-form" action="/admin/dashboard/logements/delete" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="logement_id" value="<?= htmlspecialchars(trim($logement['id'])) ?>">
+                                        <button type="submit" class="btn btn-delete">
+                                            Supprimer
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -91,7 +95,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         <label for="new-item">Ajouter des équipements:</label>
                         <div class="item-input">
                             <input type="text" id="new-item" placeholder="Nouvel équipement">
-                            <button class="btn btn-add" type="button" onclick="add_item()">Ajouter</button>
+                            <button class="btn btn-ajout-form" type="button" onclick="add_item()">Ajouter</button>
                         </div>
                         <ul id="equipments" class="equipments">
                             <?php
@@ -101,15 +105,20 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             $equipments_array = explode(',', $equipment);
                             ?>
                             <?php foreach ($equipments_array as $equipment): ?>
-                                <li>
-                                    <?= $equipment ?>
+                                <li class="equipment-li">
+                                    <p><?= $equipment ?></p>
                                     <input type="hidden" name="equipments[]" value="<?= $equipment ?>">
-                                    <button type="button" onclick="this.parentElement.remove()">Supprimer</button>
+                                    <button type="button" class="btn btn-delete" onclick="this.parentElement.remove()">Supprimer</button>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
-                    <button class="btn btn-add" type="submit">Sauvegarder</button>
+                    <div class="form-btns">
+                        <button class="btn btn-back">
+                            <a href="/admin/dashboard/logements">Retour</a>
+                        </button>
+                        <button class="btn btn-add" type="submit">Sauvegarder</button>
+                    </div>
                 </form>
                 <script>
                     function add_item() {
@@ -120,7 +129,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             li.innerHTML = `
                     ${newItemInput.value}
                     <input type="hidden" name="equipments[]" value="${newItemInput.value}">
-                    <button type="button" onclick="this.parentElement.remove()">Supprimer</button>
+                    <button type="button" class="btn btn-delete" onclick="this.parentElement.remove()">Supprimer</button>
                 `;
                             itemsList.appendChild(li);
                             newItemInput.value = '';

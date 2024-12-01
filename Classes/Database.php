@@ -42,17 +42,29 @@ class Database
 
     public function fetch_all($query, $params = [])
     {
-        return $this->db_query($query, $params)->fetchAll();
+        try {
+            return $this->db_query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw $e;
+        }
     }
 
     public function fetch($query, $params = [])
     {
-        return $this->db_query($query, $params)->fetch();
+        try {
+            return $this->db_query($query, $params)->fetch();
+        } catch (PDOException $e) {
+            throw $e;
+        }
     }
 
     public function delete_one($query, $params = [])
     {
-        return $this->db_query($query, $params);
+        try {
+            return $this->db_query($query, $params);
+        } catch (PDOException $e) {
+            throw $e;
+        }
     }
 
 

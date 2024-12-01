@@ -77,6 +77,35 @@
             color: white;
         }
 
+        .btn-add {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 15px;
+            border: 1px solid #4CAF50;
+            width: fit-content;
+        }
+
+        .btn-ajout-form {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-back {
+            background-color: white;
+            border: #2d3748 1px solid;
+
+
+        }
+
+        .btn-back a {
+            color: black !important;
+            text-decoration: none;
+        }
+
+        .form-btns {
+            margin-top: 15px;
+        }
+
         :root {
             --primary-color: #3490dc;
             --background-color: #f8fafc;
@@ -184,6 +213,12 @@
             padding: 2px 0;
         }
 
+
+        .error-404 {
+            font-size: 25px;
+            color: red;
+        }
+
         form {
             background-color: white;
             padding: 2rem;
@@ -201,6 +236,8 @@
         }
 
         input[type="text"],
+        input[type='email'],
+        input[type='password'],
         textarea {
             width: 100%;
             padding: 0.5rem;
@@ -216,22 +253,21 @@
             resize: vertical;
         }
 
-        .button-add {
-            display: block;
-            width: 100%;
-            padding: 0.75rem;
-            margin-top: 1.5rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.2s;
+        .add {
+            margin-bottom: 20px;
         }
 
-        .button-add:hover {
-            background-color: #0056b3;
+        .add button {
+            width: fit-content;
+            padding: 8px 12px;
+            background-color: #007bff;
+        }
+
+        .btn a {
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
         }
 
         .item-list {
@@ -269,6 +305,14 @@
             border-radius: 4px;
         }
 
+        .equipment-li {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -279,9 +323,91 @@
                 order: 2;
             }
 
-            .content {
+            .main-content {
                 order: 1;
             }
+        }
+
+        /* Styles existants pour le body, la sidebar et le header */
+
+        .main-content {
+            margin: 0 50px;
+
+        }
+
+        .welcome-section {
+            margin-bottom: 30px;
+        }
+
+        .welcome-section h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .quick-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+        }
+
+        .action-list {
+            flex: 1;
+            background-color: #2c3e50;
+
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-list h2 {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .action-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .action-list li {
+            margin-bottom: 10px;
+        }
+
+        .action-list a {
+            display: block;
+            padding: 10px 5px;
+            color: #e9e9e9;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+            transition: background-color color 0.3s ease;
+        }
+
+        .action-list a:hover {
+            color: #999;
+            background-color: #34495e;
+        }
+
+        .add-list {
+            padding: 0;
+        }
+
+        .delete-form {
+            width: fit-content;
+            height: fit-content;
+            padding: 0;
+            background: none;
+            box-shadow: none;
         }
     </style>
 </head>

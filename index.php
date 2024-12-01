@@ -1,39 +1,32 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 require('./utils.php');
-require('./Classes/RouterException.php');
-require('./Classes/ApiException.php');
 require('./Routing/Router.php');
-require('./Classes/Session.php');
 require('./Classes/Authentification.php');
-require('./Classes/Database.php');
-$db_config = require('./db_config.php');
+require('./Classes/Session.php');
 
-$db = new Database($db_config);
-$auth = new Authentification($db);
-
-
+$session = new Session();
+$auth = new Authentification();
 $router = new Router();
 
 require('./Routing/routes.php');
 
 $url = parse_url($_SERVER['REQUEST_URI'])['path'];
-
-$protected = $router->is_protected_path($url);
-
 $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
 
-if (!$protected) {
-    return $router->use_route($url, $method);
+
+$route = $router->current_route($url, $method);
+
+if (!$route) {
+    redirect_to('/not_found');
 }
 
+$is_secured_route = $router->is_secured_route($route);
+
+if (!$is_secured_route) {
+    $router->use_route($url, $method);
+    die();
+}
 
 $auth->verify_admin_access();
-
 $router->use_route($url, $method);
-
-
-
-
-
-//TODO : chercher pourquoi il  est impossible d'appeler auth dans /admin/login quand la class Auth est deja appelé dans index.php et pourquoi il est impossible de la redeclare

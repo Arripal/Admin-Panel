@@ -1,38 +1,40 @@
 <?php
-require('./Classes/Validation.php');
-require('./Classes/Authentification.php');
-require('./Classes/Database.php');
-require('./Classes/Session.php');
+require_once('./Classes/Validation.php');
+require_once('./Classes/Database.php');
 $db_config = require('./db_config.php');
-
-$session = new Session();
 $db = new Database($db_config);
 $validation = new Validation();
 
-$data = $_POST;
+$updated_logement_data = $_POST;
 
 $corresponding_logement = $db->fetch('SELECT * FROM public.logements WHERE id = :id', [
-    'id' => $data['id']
+    'id' => $updated_logement_data['id']
 ]);
 
-
-
-//$data = array_slice($form_data, 1, count($form_data) - 2);
-//$equipments = array_slice($form_data, -1, 1);
-
-// Seuls ces deux éléments doivent avoir une valeur en DB, le reste peut être null
-
-$is_valid_title = $validation->is_valid_length($data['title']);
-$is_valid_location = $validation->is_valid_length($data['location']);
-
-
-if (!$is_valid_location || !$is_valid_title) {
-
+if (empty($corresponding_logement)) {
+    $session->set_message('empty', 'Aucun logement correspondant à votre demande');
     redirect_to("location:javascript://history.go(-1)");
 }
 
+$validation->validate('title', $logement_data_to_add['title'], ['min', 'max', 'required']);
+$validation->validate('location', $logement_data_to_add['location'], ['min', 'max', 'required']);
+$validation->validate('description', $logement_data_to_add['description'], ['min', 'max', 'required']);
+$validation->validate('cover', $logement_data_to_add['cover'], ['url', 'required']);
+$validation->validate('host', $logement_data_to_add['host'], ['email', 'required']);
+$validation->validate('tags', $logement_data_to_add['tags'], ['arraystrs']);
+$validation->validate('pictures', $logement_data_to_add['pictures'], ['arraystrs']);
+$valid_equipments = $validation->validate('equipments', $logement_data_to_add['equipments'], ['arraystrs']);
+$is_valid = $validation->is_valid();
+
+if (!$is_valid) {
+    $errors = $validation->get_errors();
+    redirect_to('/admin/dashboard/logements/edit');
+    die();
+}
 
 try {
+
+    $equipments_db = set_array_to_db_insertion($updated_logement_data['equipments']);
 
     $db->db_query(
         'UPDATE public.logements SET 
@@ -43,25 +45,18 @@ try {
                 equipments = :equipments
             WHERE id = :id',
         [
-            'id' => $data['id'],
-            'title' => $data['title'], //string
-            'location' => $data['location'], //string
-            'cover' => $data['cover'], //url
-            'description' => $data['description'], //string
-            'location' => $data['location'], //string
-
+            'id' => strip_tags($updated_logement_data['id']),
+            'title' => strip_tags($updated_logement_data['title']),
+            'location' => strip_tags($updated_logement_data['location']),
+            'cover' => $updated_logement_data['cover'],
+            'description' => strip_tags($updated_logement_data['description']),
+            'equipments' => $equipments_db
         ]
     );
 
     redirect_to('/admin/dashboard/logements');
-} catch (\Throwable $e) {
+} catch (PDOException $e) {
     throw $e;
+} finally {
+    $db->close_connexion();
 }
-
-
-
-
-
-// Une fois les données validées nettoyées et stockées, rediriger l'utilisateur vers la page logements avec la liste a jour
-
-//TODO : Regarder quels sont les traitements a réaliser sur les données reçus dans le controller avant de les stockees en Db
