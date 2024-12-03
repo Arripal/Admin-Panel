@@ -26,8 +26,6 @@ if (!$is_valid) {
     die();
 }
 
-//$validation->clear();
-
 $existing_user = $db->fetch('SELECT * FROM public.user WHERE email = :email', [
     'email' => $email,
 ]);

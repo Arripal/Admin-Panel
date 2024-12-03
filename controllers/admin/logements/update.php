@@ -6,29 +6,33 @@ $db = new Database($db_config);
 $validation = new Validation();
 
 $updated_logement_data = $_POST;
-
+var_dump($updated_logement_data);
+die();
 $corresponding_logement = $db->fetch('SELECT * FROM public.logements WHERE id = :id', [
     'id' => $updated_logement_data['id']
 ]);
 
 if (empty($corresponding_logement)) {
-    $session->set_message('empty', 'Aucun logement correspondant à votre demande');
-    redirect_to("location:javascript://history.go(-1)");
+    $_SESSION['empty'] = 'Aucun logement correspondant à votre demande';
+    redirect_to("/admin/dashboard/edit");
 }
 
-$validation->validate('title', $logement_data_to_add['title'], ['min', 'max', 'required']);
-$validation->validate('location', $logement_data_to_add['location'], ['min', 'max', 'required']);
-$validation->validate('description', $logement_data_to_add['description'], ['min', 'max', 'required']);
-$validation->validate('cover', $logement_data_to_add['cover'], ['url', 'required']);
-$validation->validate('host', $logement_data_to_add['host'], ['email', 'required']);
-$validation->validate('tags', $logement_data_to_add['tags'], ['arraystrs']);
-$validation->validate('pictures', $logement_data_to_add['pictures'], ['arraystrs']);
-$valid_equipments = $validation->validate('equipments', $logement_data_to_add['equipments'], ['arraystrs']);
+$validation->validate('title', $updated_logement_data['title'], ['min', 'max', 'required']);
+$validation->validate('location', $updated_logement_data['location'], ['min', 'max', 'required']);
+$validation->validate('description', $updated_logement_data['description'], ['min', 'max', 'required']);
+$validation->validate('cover', $updated_logement_data['cover'], ['url', 'required']);
+$validation->validate('host', $updated_logement_data['host'], ['email', 'required']);
+$validation->validate('tags', $updated_logement_data['tags'], ['arraystrs']);
+$validation->validate('pictures', $updated_logement_data['pictures'], ['arraystrs']);
+$validation->validate('equipments', $updated_logement_data['equipments'], ['arraystrs']);
 $is_valid = $validation->is_valid();
+
+
 
 if (!$is_valid) {
     $errors = $validation->get_errors();
-    redirect_to('/admin/dashboard/logements/edit');
+    $_SESSION['errors'] = $errors;
+    redirect_to($_SERVER['HTTP_REFERER']);
     die();
 }
 

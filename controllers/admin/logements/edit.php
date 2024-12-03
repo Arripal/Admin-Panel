@@ -14,10 +14,9 @@ try {
     ]);
 
     if (empty($logement)) {
-        $errors['empty'] = 'Aucun résultat correspondant à votre demande';
-        access_view('/not_found', [
-            'errors' => $errors
-        ]);
+        $_SESSION['error'] = 'Impossible de mettre à jour le logement, il n\'existe pas en base de données.';
+        redirect_to('/admin/dashboard/logements');
+        die();
     }
 } catch (PDOException $e) {
     $errors['db'] = "Impossible d\'acceder à la ressource demandée.";

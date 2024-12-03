@@ -15,17 +15,21 @@ if (empty($corresponding_user)) {
     redirect_to("location:javascript://history.go(-1)");
 }
 
-$is_valid_password;
-$is_valid_url = $validation->is_valid_URL($updated_user_data['picture']);
-$is_valid_email = $validation->is_valid_email($updated_user_data['email']);
-$is_valid_role = $validation->is_valid_role($updated_user_data['role']);
-/*
+
+$validation->validate('picture', $updated_user_data['picture'], ['required', 'url']);
+$validation->validate('email', $updated_user_data['email'], ['required', 'email']);
+$validation->validate('role', $updated_user_data['role'], ['role', 'required']);
+$is_valid = $validation->is_valid();
+
+
 if ($updated_user_data['role'] === strtoupper('admin')) {
-    $is_valid_password =  $validation->is_valid_password($updated_user_data['password']);
+    $validation->validate('password', $updated_user_data['password'], ['password', 'required']);
 }
-*/
-if (!$is_valid_url || !$is_valid_email  || !$is_valid_role) {
-    redirect_to("location:javascript://history.go(-1)");
+
+if (!$is_valid) {
+    $errors = $validation->get_errors();
+    $_SESSION['errors'] = $errors;
+    redirect_to("admin/dashboard/users/edit");
     die();
 }
 

@@ -16,6 +16,12 @@ access_view('/components/head.view', ['title' => 'Logements']);
                 <div class="add">
                     <h2>Liste des logements</h2>
                     <button class="btn"><a href="/admin/dashboard/logements/add">Ajouter un logement</a></button>
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <div class="error">
+                            <?= $_SESSION['error'] ?>
+                        </div>
+                        <?php unset($_SESSION['error']); ?>
+                    <?php endif; ?>
                 </div>
                 <table>
                     <thead>

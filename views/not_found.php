@@ -15,7 +15,7 @@ access_view('/components/head.view', ['title' => 'Ressource introuvable']);
             <?php if (!empty($errors)) { ?>
                 <div>
                     <?php foreach ($errors as $error): ?>
-                        <p class="error-404"><?= htmlspecialchars($error) ?></p>
+                        <p class="error-txt"><?= htmlspecialchars($error) ?></p>
                     <?php endforeach; ?>
                 </div>
             <?php } ?>

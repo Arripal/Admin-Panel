@@ -17,27 +17,18 @@ class Session
     public function close_session()
     {
         $this->empty();
+
+        if (ini_get("session.use_cookies")) {
+            $session_params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, $session_params['path'], $session_params['domain'], $session_params['secure'], $session_params['httponly']);
+        }
         session_unset();
         session_destroy();
+        session_write_close();
     }
 
     private function empty()
     {
         $_SESSION = [];
-    }
-
-    public function set_message($key, $message)
-    {
-        $_SESSION[$key] = $message;
-    }
-
-    public function get_message($key)
-    {
-        return $_SESSION[$key] ?? null;
-    }
-
-    public function delete_message($key)
-    {
-        unset($_SESSION[$key]);
     }
 }

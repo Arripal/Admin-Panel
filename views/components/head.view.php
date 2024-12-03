@@ -214,8 +214,13 @@
         }
 
 
-        .error-404 {
-            font-size: 25px;
+        .error-txt {
+            font-size: 15px;
+            color: red;
+        }
+
+        .error {
+            margin: 10px 0;
             color: red;
         }
 

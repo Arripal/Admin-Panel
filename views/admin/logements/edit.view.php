@@ -80,23 +80,75 @@ access_view('/components/head.view', ['title' => 'Logements']);
             <div class="form-container">
                 <form action="/admin/dashboard/logements/update" method="post">
                     <h2>Modifications</h2>
+                    <?php
+                    if (isset($_SESSION['empty'])) : ?>
+                        <div class="error">
+                            <p class="error-txt"><?= $_SESSION['empty'] ?></p>
+                        </div>
+                    <?php endif; ?>
+
                     <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="id" value="<?= htmlspecialchars(trim($logement['id'])) ?>">
                     <label for="title">Titre:</label>
                     <input type="text" id="title" name="title" value="<?= htmlspecialchars(trim($logement['title'])) ?>">
+                    <?php if (isset($_SESSION['errors'])): ?>
+                        <div class="error">
+                            <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
+                                <?php if (str_contains($name, 'title')) : ?>
+                                    <p class="error-txt"><?= htmlspecialchars($value) ?></p>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                     <label for="description">Description:</label>
                     <textarea id="description" name="description"><?= htmlspecialchars(trim($logement['description'])) ?>
                         </textarea>
+                    <?php if (isset($_SESSION['errors'])): ?>
+                        <div class="error">
+                            <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
+                                <?php if (str_contains($name, 'description')) : ?>
+                                    <p class="error-txt"><?= htmlspecialchars($value) ?></p>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                     <label for="location">Localisation:</label>
                     <input type="text" id="location" name="location" value="<?= htmlspecialchars(trim($logement['location'])) ?>">
+                    <?php if (isset($_SESSION['errors'])): ?>
+                        <div class="error">
+                            <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
+                                <?php if (str_contains($name, 'location')) : ?>
+                                    <p class="error-txt"><?= htmlspecialchars($value) ?></p>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                     <label for="cover">Image de couverture:</label>
                     <input type="text" id="cover" name="cover" value="<?= htmlspecialchars(trim($logement['cover'])) ?>">
+                    <?php if (isset($_SESSION['errors'])): ?>
+                        <div class="error">
+                            <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
+                                <?php if (str_contains($name, 'cover')) : ?>
+                                    <p class="error-txt"><?= htmlspecialchars($value) ?></p>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="item-list">
                         <label for="new-item">Ajouter des équipements:</label>
                         <div class="item-input">
                             <input type="text" id="new-item" placeholder="Nouvel équipement">
                             <button class="btn btn-ajout-form" type="button" onclick="add_item()">Ajouter</button>
                         </div>
+                        <?php if (isset($_SESSION['errors'])): ?>
+                            <div class="error">
+                                <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
+                                    <?php if (str_contains($name, 'equipments')) : ?>
+                                        <p class="error-txt"><?= htmlspecialchars($value) ?></p>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
                         <ul id="equipments" class="equipments">
                             <?php
                             $equipment =  $logement['equipments'];
@@ -119,6 +171,9 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         </button>
                         <button class="btn btn-add" type="submit">Sauvegarder</button>
                     </div>
+                    <?php if (isset($_SESSION['errors'])) {
+                        unset($_SESSION['errors']);
+                    } ?>
                 </form>
                 <script>
                     function add_item() {

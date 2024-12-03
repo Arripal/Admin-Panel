@@ -5,7 +5,6 @@ require('./Routing/Router.php');
 require('./Classes/Authentification.php');
 require('./Classes/Session.php');
 
-$session = new Session();
 $auth = new Authentification();
 $router = new Router();
 
@@ -30,3 +29,5 @@ if (!$is_secured_route) {
 
 $auth->verify_admin_access();
 $router->use_route($url, $method);
+
+//TODO : Ajout de style sur la page login, améliorer la logique de session et de gestion d'erreurs

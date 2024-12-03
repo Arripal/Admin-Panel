@@ -62,7 +62,7 @@ class Validation
             return  $this->errors["{$this->name}-type"] = "Le champ {$this->name} n'est pas du type requis.";
         }
 
-        if (strlen($value) < $this->lengths['maxlength']) {
+        if (strlen($value) > $this->lengths['maxlength']) {
             return $this->errors["{$this->name}-maxlength"] = "Le champ {$this->name} n'a pas la longueur maximum requise.";
         }
 
@@ -107,13 +107,9 @@ class Validation
 
     private function is_array_of_string($value)
     {
-        if (!is_array($value)) {
-            return $this->errors['array-type'] = "La valeur passée n'est pas un tableau";
-        }
-
         foreach ($value as $item) {
             if (!is_string($item)) {
-                return $this->errors['array-item-type'] = 'Les éléments du tableau doivent être de type string.';
+                return $this->errors["{$this->name}-array-item-type"] = 'Les éléments du tableau doivent être de type string.';
             }
         }
     }
@@ -122,10 +118,10 @@ class Validation
     {
         $value = trim($value);
         $value = strtolower($value);
+        $is_valid = array_search($value, $this->roles);
 
-        $is_valid = array_search($value, $this->roles, true);
-        if (!$is_valid) {
-            return $this->errors['role'] = 'Role invalide.';
+        if ($is_valid === false) {
+            return $this->errors["{$this->name}-role"] = 'Role invalide.';
         }
         return true;
     }

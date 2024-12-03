@@ -53,7 +53,9 @@
                 </p>
             <?php endforeach ?>
         </div>
+        <?php unset($errors); ?>
     <?php endif; ?>
+
 </body>
 
 </html>
