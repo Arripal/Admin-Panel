@@ -12,19 +12,20 @@ $corresponding_user = $db->fetch('SELECT * FROM public.user WHERE id = :id', [
 ]);
 
 if (empty($corresponding_user)) {
-    redirect_to("location:javascript://history.go(-1)");
+    $_SESSION['empty_user'] = 'Impossible d\éditer l\'utilisateur, aucune correspondance en base de données.';
+    redirect_to("admin/dashboard/users/edit");
+    die();
 }
 
-
+$validation->validate('first_name', $updated_user_data['first_name'], ['required']);
+$validation->validate('last_name', $updated_user_data['last_name'], ['required']);
 $validation->validate('picture', $updated_user_data['picture'], ['required', 'url']);
 $validation->validate('email', $updated_user_data['email'], ['required', 'email']);
 $validation->validate('role', $updated_user_data['role'], ['role', 'required']);
-$is_valid = $validation->is_valid();
-
-
-if ($updated_user_data['role'] === strtoupper('admin')) {
-    $validation->validate('password', $updated_user_data['password'], ['password', 'required']);
+if ($updated_user_data['role'] === 'admin') {
+    $validation->validate('password', $updated_user_data['password'], ['password']);
 }
+$is_valid = $validation->is_valid();
 
 if (!$is_valid) {
     $errors = $validation->get_errors();

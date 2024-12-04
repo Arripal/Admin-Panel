@@ -17,7 +17,8 @@ function access_view($path, $data = [])
 
 function redirect_to($path)
 {
-    return header("Location: {$path}");
+    header("Location: {$path}");
+    die();
 }
 
 function set_array_to_db_insertion($data)

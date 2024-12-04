@@ -12,8 +12,6 @@ require('./Routing/routes.php');
 
 $url = parse_url($_SERVER['REQUEST_URI'])['path'];
 $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
-
-
 $route = $router->current_route($url, $method);
 
 if (!$route) {
@@ -29,5 +27,3 @@ if (!$is_secured_route) {
 
 $auth->verify_admin_access();
 $router->use_route($url, $method);
-
-//TODO : Ajout de style sur la page login, améliorer la logique de session et de gestion d'erreurs

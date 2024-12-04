@@ -14,26 +14,25 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 $validation->validate('email', $email, ['email', 'required']);
-$validation->validate('password', $password, ['password', 'required']);
+$validation->validate('password', $password, ['password', 'required', 'min']);
 $is_valid = $validation->is_valid();
 
 if (!$is_valid) {
     $errors = $validation->get_errors();
-
     access_view('admin/login.view', [
         'errors' => $errors
     ]);
     die();
 }
 
-$existing_user = $db->fetch('SELECT * FROM public.user WHERE email = :email', [
+$existing_user = $db->fetch('SELECT * FROM public.user WHERE email = :email AND role = :role', [
     'email' => $email,
+    'role' => 'admin'
 ]);
 
-if (!$existing_user || $existing_user['role'] !== 'admin') {
-
+if (!$existing_user) {
     access_view('admin/login.view', [
-        'invalid' => 'Les identifiants fournis sont incorrects.'
+        'user_error' => 'Les données fournies sont incorrectes.'
     ]);
     die();
 }
@@ -43,7 +42,7 @@ $matching_passwords = $crypt->password_decryption($password, $hashed_password);
 
 if (!$matching_passwords) {
     access_view('admin/login.view', [
-        'invalid' => 'Les identifiants fournis sont incorrects.'
+        'user_error' => 'Les données fournies sont incorrectes.'
     ]);
     die();
 }

@@ -27,7 +27,6 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         </div>
                         <?php unset($_SESSION['user_error']) ?>
                     <?php endif; ?>
-
                     <label for="title">Titre:</label>
                     <input type="text" id="title" name="title" placeholder="Ajouter un titre">
                     <?php if (isset($_SESSION['errors'])): ?>

@@ -106,7 +106,7 @@ class Validation
     private function is_required($value)
     {
         if ($value == '' || $value == null) {
-            return $this->errors["{$this->name}-required"] = "Le champ {$this->name} est requis. ";
+            return $this->errors["{$this->name}-required"] = "Ce champ est requis. ";
         }
         return true;
     }
