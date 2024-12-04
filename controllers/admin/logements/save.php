@@ -12,10 +12,13 @@ $validation->validate('location', $logement_data_to_add['location'], ['min', 'ma
 $validation->validate('description', $logement_data_to_add['description'], ['min', 'max', 'required']);
 $validation->validate('cover', $logement_data_to_add['cover'], ['url', 'required']);
 $validation->validate('host', $logement_data_to_add['host'], ['email', 'required']);
+$validation->validate('rating', $logement_data_to_add['rating'], ['rating', 'required']);
 $validation->validate('tags', $logement_data_to_add['tags'], ['arraystrs'], 'required');
 $validation->validate('pictures', $logement_data_to_add['pictures'], ['arraystrs'], 'required');
 $validation->validate('equipments', $logement_data_to_add['equipments'], ['arraystrs'], 'required');
 $is_valid = $validation->is_valid();
+
+
 
 if (!$is_valid) {
     $errors = $validation->get_errors();
@@ -47,7 +50,8 @@ try {
             cover, 
             description, 
             pictures, 
-            equipments, 
+            equipments,
+            rating,
             tags
         ) VALUES (
             :title, 
@@ -57,6 +61,7 @@ try {
             :description, 
             :pictures, 
             :equipments, 
+            :rating,
             :tags
         )',
         [
@@ -67,6 +72,7 @@ try {
             'description' => strip_tags($logement_data_to_add['description']),
             'pictures' => $pictures_db,
             'equipments' => $equipments_db,
+            'rating' => strip_tags($logement_data_to_add['rating']),
             'tags' => $tags_db
         ]
     );

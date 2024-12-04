@@ -10,12 +10,18 @@ class Validation
         'password' => 'is_password',
         'required' => 'is_required',
         'arraystrs' => 'is_array_of_string',
+        'rating' => 'is_rating',
         'role' => 'is_valid_role'
     ];
     private $lengths = [
         'minlength' => 5,
         'maxlength' => 255
     ];
+    private $rating_values = [
+        'min' => 0,
+        'max' => 5
+    ];
+
     private $roles = ['admin', 'user'];
     private $name;
 
@@ -55,11 +61,22 @@ class Validation
         return true;
     }
 
+    private function is_rating($value)
+    {
 
+        if ($value == '' || $value === null) {
+            return  $this->errors["{$this->name}-value"] = "La note n'est pas valide, elle doit être comprise entre {$this->rating_values['min']} et {$this->rating_values['max']}.";
+        }
+
+        if ($value < $this->rating_values['min'] || $value > $this->rating_values['max']) {
+            return  $this->errors["{$this->name}-value"] = "La note n'est pas valide, elle doit être comprise entre {$this->rating_values['min']} et {$this->rating_values['max']}.";
+        }
+        return true;
+    }
     private function maxlength($value)
     {
         if (!is_string($value)) {
-            return  $this->errors["{$this->name}-type"] = "Le champ {$this->name} n'est pas du type requis.";
+            return  $this->errors["{$this->name}-type"] = "Le champ {$this->name} n'est pas valide.";
         }
 
         if (strlen($value) > $this->lengths['maxlength']) {
@@ -109,7 +126,7 @@ class Validation
     {
         foreach ($value as $item) {
             if (!is_string($item)) {
-                return $this->errors["{$this->name}-array-item-type"] = 'Les éléments du tableau doivent être de type string.';
+                return $this->errors["{$this->name}-array-item-type"] = 'Les éléments passés sont invalides.';
             }
         }
     }

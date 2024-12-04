@@ -6,8 +6,7 @@ $db = new Database($db_config);
 $validation = new Validation();
 
 $updated_logement_data = $_POST;
-var_dump($updated_logement_data);
-die();
+
 $corresponding_logement = $db->fetch('SELECT * FROM public.logements WHERE id = :id', [
     'id' => $updated_logement_data['id']
 ]);
@@ -22,12 +21,11 @@ $validation->validate('location', $updated_logement_data['location'], ['min', 'm
 $validation->validate('description', $updated_logement_data['description'], ['min', 'max', 'required']);
 $validation->validate('cover', $updated_logement_data['cover'], ['url', 'required']);
 $validation->validate('host', $updated_logement_data['host'], ['email', 'required']);
+$validation->validate('rating', $updated_logement_data['rating'], ['rating']);
 $validation->validate('tags', $updated_logement_data['tags'], ['arraystrs']);
 $validation->validate('pictures', $updated_logement_data['pictures'], ['arraystrs']);
 $validation->validate('equipments', $updated_logement_data['equipments'], ['arraystrs']);
 $is_valid = $validation->is_valid();
-
-
 
 if (!$is_valid) {
     $errors = $validation->get_errors();

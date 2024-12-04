@@ -19,6 +19,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
             </style>
             <div class="form-container">
                 <form action="/admin/dashboard/logements/save" method="post">
+                    <input type="hidden" name="rating" value="0">
                     <h2>Ajout d'un logement</h2>
                     <?php if (isset($_SESSION['user_error'])) : ?>
                         <div class="error">
@@ -38,6 +39,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
+
                     <label for="host">Adresse mail propriétaire :</label>
                     <input type="email" id="host" name="host" placeholder="Ajouter un propriétaire">
                     <?php if (isset($_SESSION['errors'])): ?>
