@@ -15,7 +15,6 @@ access_view('/components/head.view', ['title' => 'Dashboard']);
                 <h1>Bienvenue dans votre panel d'administration</h1>
                 <p>Gérez facilement vos logements et utilisateurs.</p>
             </section>
-
             <section class="quick-actions">
                 <div class="action-list">
                     <h2>Gestion des Logements</h2>

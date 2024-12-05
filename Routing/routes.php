@@ -2,6 +2,7 @@
 
 $router->get('/logements', '/logements/show.php', false);
 $router->get('/admin/login', '/admin/login_form.php', false);
+$router->get('/admin/logout', '/admin/logout.php');
 $router->post('/admin/login', '/admin/login.php', false);
 $router->get('/not_found', '/admin/not_found.php', false);
 

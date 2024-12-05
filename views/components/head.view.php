@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/styles.css">
     <title><?= $title ?></title>
     <style>
         table {
@@ -214,8 +215,13 @@
         }
 
 
-        .error-404 {
-            font-size: 25px;
+        .error-txt {
+            font-size: 15px;
+            color: red;
+        }
+
+        .error {
+            margin: 10px 0;
             color: red;
         }
 
@@ -225,7 +231,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
         }
 
         label {

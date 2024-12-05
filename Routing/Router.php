@@ -16,7 +16,6 @@ class Router
         return $this;
     }
 
-
     public function get($url, $controller, $secured = true)
     {
         return $this->add_route($url, $controller, 'GET', $secured);
@@ -36,7 +35,6 @@ class Router
     {
         return $this->add_route($url, $controller, 'POST', $secured);
     }
-
 
     public function current_route($url, $method)
     {

@@ -12,20 +12,25 @@ $corresponding_user = $db->fetch('SELECT * FROM public.user WHERE id = :id', [
 ]);
 
 if (empty($corresponding_user)) {
-    redirect_to("location:javascript://history.go(-1)");
+    $_SESSION['empty_user'] = 'Impossible d\éditer l\'utilisateur, aucune correspondance en base de données.';
+    redirect_to("admin/dashboard/users/edit");
+    die();
 }
 
-$is_valid_password;
-$is_valid_url = $validation->is_valid_URL($updated_user_data['picture']);
-$is_valid_email = $validation->is_valid_email($updated_user_data['email']);
-$is_valid_role = $validation->is_valid_role($updated_user_data['role']);
-/*
-if ($updated_user_data['role'] === strtoupper('admin')) {
-    $is_valid_password =  $validation->is_valid_password($updated_user_data['password']);
+$validation->validate('first_name', $updated_user_data['first_name'], ['required']);
+$validation->validate('last_name', $updated_user_data['last_name'], ['required']);
+$validation->validate('picture', $updated_user_data['picture'], ['required', 'url']);
+$validation->validate('email', $updated_user_data['email'], ['required', 'email']);
+$validation->validate('role', $updated_user_data['role'], ['role', 'required']);
+if ($updated_user_data['role'] === 'admin') {
+    $validation->validate('password', $updated_user_data['password'], ['password']);
 }
-*/
-if (!$is_valid_url || !$is_valid_email  || !$is_valid_role) {
-    redirect_to("location:javascript://history.go(-1)");
+$is_valid = $validation->is_valid();
+
+if (!$is_valid) {
+    $errors = $validation->get_errors();
+    $_SESSION['errors'] = $errors;
+    redirect_to("admin/dashboard/users/edit");
     die();
 }
 

@@ -9,13 +9,18 @@ $validation = new Validation();
 
 $user_data = $_POST;
 
+$validation->validate('first_name', $user_data['first_name'], ['required']);
+$validation->validate('last_name', $user_data['last_name'], ['required']);
 $validation->validate('picture', $user_data['picture'], ['required', 'url']);
 $validation->validate('email', $user_data['email'], ['email', 'required']);
 $validation->validate('password', $user_data['password'], ['required', 'password']);
 $validation->validate('role', $user_data['role'], ['role']);
+$is_valid = $validation->is_valid();
 
-if (!$is_valid_url || !$is_valid_email || !$is_valid_password || !$is_valid_role) {
-    redirect_to('/admin/dashboard/not_found');
+if (!$is_valid) {
+    $errors = $validation->get_errors();
+    $_SESSION['errors'] = $errors;
+    redirect_to($_SERVER['HTTP_REFERER']);
     die();
 }
 
@@ -24,14 +29,15 @@ $user = $db->fetch("SELECT * FROM public.user WHERE email= :email ", [
 ]);
 
 if ($user) {
-    echo 'EXISTE';
+    $_SESSION['existing_user'] = 'Cette adresse mail est déjà utilisée.';
+    redirect_to($_SERVER['HTTP_REFERER']);
     die();
 }
 
 try {
 
-    $full_name = $user_data['first_name'] . ' ' . $user_data['last_name'];
     $hashed_password = $crypt->password_encryption($user_data['password']);
+    $full_name = $user_data['first_name'] . ' ' . $user_data['last_name'];
 
     $db->db_query(
         'INSERT INTO public.user (

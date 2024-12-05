@@ -1,13 +1,12 @@
 <?php
 
-require('./Classes/Database.php');
-require('./Classes/Session.php');
+require_once('./Classes/Database.php');
+require_once('./Classes/Session.php');
 $db_config = require('./db_config.php');
 $session = new Session();
 $db = new Database($db_config);
 
 $data = $_POST;
-$errors = [];
 
 try {
     $corresponding_logement = $db->fetch('SELECT * FROM public.logements WHERE id = :id', [
@@ -15,10 +14,8 @@ try {
     ]);
 
     if (empty($corresponding_logement)) {
-        $errors['empty'] = 'Impossible de supprimer le logement car il n\'existe pas en base données ! ';
-        access_view('/not_found', [
-            'errors' => $errors
-        ]);
+        $_SESSION['error'] = 'Impossible de mettre à jour le logement, il n\'existe pas en base de données.';
+        redirect_to('/admin/dashboard/logements');
         die();
     }
 
