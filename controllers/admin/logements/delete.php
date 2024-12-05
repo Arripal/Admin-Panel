@@ -19,7 +19,7 @@ try {
         die();
     }
 
-    $db->db_query('DELETE FROM public.logements WHERE id = :id', [
+    $db->delete_one('DELETE FROM public.logements WHERE id = :id', [
         'id' => $data['logement_id']
     ]);
 

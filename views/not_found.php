@@ -12,8 +12,8 @@ access_view('/components/head.view', ['title' => 'Ressource introuvable']);
         ?>
         <main class="content">
             <h2>La page demandée n'existe pas </h2>
-            <?php if (!empty($errors)) { ?>
-                <div>
+            <?php if (isset($errors)) { ?>
+                <div class="error">
                     <?php foreach ($errors as $error): ?>
                         <p class="error-txt"><?= htmlspecialchars($error) ?></p>
                     <?php endforeach; ?>

@@ -19,11 +19,11 @@ try {
         die();
     }
 
-    $db->db_query('DELETE FROM public.user WHERE email = :email', [
+    $db->delete_one('DELETE FROM public.user WHERE email = :email', [
         'email' => $corresponding_user['email']
     ]);
 
-    $db->db_query('DELETE FROM public.logements WHERE host = :host', [
+    $db->delete_one('DELETE FROM public.logements WHERE host = :host', [
         'host' => $corresponding_user['email']
     ]);
     redirect_to('/admin/dashboard/users');
