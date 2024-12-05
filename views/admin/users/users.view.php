@@ -29,7 +29,6 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
                         </tr>
                     </thead>
                     <tbody>
-
                         <?php foreach ($users as $user) { ?>
                             <tr>
                                 <td><?= htmlspecialchars(trim($user['name'])) ?></td>
@@ -51,7 +50,6 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
                                 </td>
                             </tr>
                         <?php  } ?>
-
                     </tbody>
                 </table>
             <?php } ?>

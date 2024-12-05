@@ -60,11 +60,6 @@ access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
                     <?php } ?>
                 </tbody>
             </table>
-            <style>
-                .form-container {
-                    margin-top: 18px;
-                }
-            </style>
             <div class="form-container">
                 <?php
                 $full_name = explode(' ', $user['name']);

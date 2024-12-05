@@ -60,13 +60,8 @@ access_view('/components/head.view', ['title' => 'Logements']);
                                     $equipements_array = explode(',', $equipment);
                                     ?>
                                     <ul class="equipments">
-
-
                                         <?php foreach ($equipements_array as $equipement): ?>
-
                                             <li><?= htmlspecialchars($equipement) ?></li>
-
-
                                         <?php endforeach; ?>
                                     </ul>
                                 </td>

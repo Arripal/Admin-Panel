@@ -88,11 +88,6 @@ access_view('/components/head.view', ['title' => 'Logements']);
                     <?php } ?>
                 </tbody>
             </table>
-            <style>
-                .form-container {
-                    margin-top: 18px;
-                }
-            </style>
             <div class="form-container">
                 <form action="/admin/dashboard/logements/update" method="post">
                     <h2>Modifications</h2>

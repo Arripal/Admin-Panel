@@ -12,11 +12,6 @@ access_view('/components/head.view', ['title' => 'Logements']);
         ?>
         <main class="content">
             <h2>Ajouter un logement</h2>
-            <style>
-                .form-container {
-                    margin-top: 18px;
-                }
-            </style>
             <div class="form-container">
                 <form action="/admin/dashboard/logements/save" method="post">
                     <input type="hidden" name="rating" value="0">

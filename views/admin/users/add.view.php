@@ -12,11 +12,6 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Ajout']);
         ?>
         <main class="content">
             <h2>Ajouter un utilisateur</h2>
-            <style>
-                .form-container {
-                    margin-top: 18px;
-                }
-            </style>
             <div class="form-container">
                 <form action="/admin/dashboard/users/save" method="post">
                     <h2>Ajout d'un utilisateur</h2>
