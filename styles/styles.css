@@ -348,8 +348,6 @@ textarea {
 	}
 }
 
-/* Styles existants pour le body, la sidebar et le header */
-
 .main-content {
 	margin: 0 50px;
 }
@@ -409,6 +407,13 @@ textarea {
 	font-size: 20px;
 	font-weight: 500;
 	transition: background-color color 0.3s ease;
+}
+
+.logout-link {
+	color: white;
+	font-size: 15px;
+	font-weight: 500;
+	text-decoration: none;
 }
 
 .action-list a:hover {
