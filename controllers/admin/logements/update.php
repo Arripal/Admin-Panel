@@ -1,9 +1,10 @@
 <?php
 require_once('./Classes/Validation.php');
 require_once('./Classes/Database.php');
+require_once('./Classes/LogementValidation.php');
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
-$validation = new Validation();
+$validation = new LogementValidation();
 
 $updated_logement_data = $_POST;
 
@@ -13,22 +14,13 @@ $corresponding_logement = $db->fetch('SELECT * FROM public.logements WHERE id = 
 
 if (empty($corresponding_logement)) {
     $_SESSION['empty'] = 'Aucun logement correspondant à votre demande';
-    redirect_to("/admin/dashboard/edit");
+    redirect_to($_SERVER['HTTP_REFERER']);
 }
 
-$validation->validate('title', $updated_logement_data['title'], ['min', 'max', 'required']);
-$validation->validate('location', $updated_logement_data['location'], ['min', 'max', 'required']);
-$validation->validate('description', $updated_logement_data['description'], ['min', 'max', 'required']);
-$validation->validate('cover', $updated_logement_data['cover'], ['url', 'required']);
-$validation->validate('host', $updated_logement_data['host'], ['email', 'required']);
-$validation->validate('rating', $updated_logement_data['rating'], ['rating']);
-$validation->validate('tags', $updated_logement_data['tags'], ['arraystrs']);
-$validation->validate('pictures', $updated_logement_data['pictures'], ['arraystrs']);
-$validation->validate('equipments', $updated_logement_data['equipments'], ['arraystrs']);
-$is_valid = $validation->is_valid();
+$is_valid = $validation->validate_logement($updated_logement_data);
 
 if (!$is_valid) {
-    $errors = $validation->get_errors();
+    $errors = $validation->get_validation_errors();
     $_SESSION['errors'] = $errors;
     redirect_to($_SERVER['HTTP_REFERER']);
     die();

@@ -2,24 +2,18 @@
 require_once('./Classes/Validation.php');
 require_once('./Classes/Database.php');
 require_once('./Classes/Crypt.php');
+require_once('./Classes/UserValidation.php');
 $db_config = require('./db_config.php');
 $crypt = new Crypt();
 $db = new Database($db_config);
-$validation = new Validation();
+
+$validation = new UserValidation();
 
 $user_data = $_POST;
+$is_valid_user = $validation->validate_user($user_data);
 
-$validation->validate('first_name', $user_data['first_name'], ['required']);
-$validation->validate('last_name', $user_data['last_name'], ['required']);
-$validation->validate('picture', $user_data['picture'], ['required', 'url']);
-$validation->validate('email', $user_data['email'], ['email', 'required']);
-$validation->validate('password', $user_data['password'], ['required', 'password']);
-$validation->validate('role', $user_data['role'], ['role']);
-$is_valid = $validation->is_valid();
-
-if (!$is_valid) {
-    $errors = $validation->get_errors();
-    $_SESSION['errors'] = $errors;
+if (!$is_valid_user) {
+    $_SESSION['errors'] = $validation->get_validation_errors();
     redirect_to($_SERVER['HTTP_REFERER']);
     die();
 }

@@ -111,7 +111,7 @@ class Validation
         return true;
     }
 
-    private function is_password($value)
+    public function is_password($value)
     {
         $pattern = '/^.{5,}$/';
         $password_valid = preg_match($pattern, $value);

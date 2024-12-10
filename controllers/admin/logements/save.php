@@ -1,27 +1,16 @@
 <?php
 require_once('./Classes/Database.php');
 require_once('./Classes/Validation.php');
+require_once('./Classes/LogementValidation.php');
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
-$validation = new Validation();
+$validation = new LogementValidation();
 
 $logement_data_to_add = $_POST;
+$is_valid_logement = $validation->validate_logement($logement_data_to_add);
 
-$validation->validate('title', $logement_data_to_add['title'], ['min', 'max', 'required']);
-$validation->validate('location', $logement_data_to_add['location'], ['min', 'max', 'required']);
-$validation->validate('description', $logement_data_to_add['description'], ['min', 'max', 'required']);
-$validation->validate('cover', $logement_data_to_add['cover'], ['url', 'required']);
-$validation->validate('host', $logement_data_to_add['host'], ['email', 'required']);
-$validation->validate('rating', $logement_data_to_add['rating'], ['rating', 'required']);
-$validation->validate('tags', $logement_data_to_add['tags'], ['arraystrs'], 'required');
-$validation->validate('pictures', $logement_data_to_add['pictures'], ['arraystrs'], 'required');
-$validation->validate('equipments', $logement_data_to_add['equipments'], ['arraystrs'], 'required');
-$is_valid = $validation->is_valid();
-
-
-
-if (!$is_valid) {
-    $errors = $validation->get_errors();
+if (!$is_valid_logement) {
+    $errors = $validation->get_validation_errors();
     $_SESSION['errors'] = $errors;
     redirect_to($_SERVER['HTTP_REFERER']);
     die();

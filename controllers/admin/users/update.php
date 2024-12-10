@@ -1,36 +1,28 @@
 <?php
 require_once('./Classes/Validation.php');
 require_once('./Classes/Database.php');
+require_once('./Classes/UserValidation.php');
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
-$validation = new Validation();
+$validation = new UserValidation();
 
 $updated_user_data = $_POST;
 
-$corresponding_user = $db->fetch('SELECT * FROM public.user WHERE id = :id', [
-    'id' => $updated_user_data['id']
+$corresponding_user = $db->fetch('SELECT * FROM public.user WHERE email = :email', [
+    'email' => $updated_user_data['email']
 ]);
 
 if (empty($corresponding_user)) {
     $_SESSION['empty_user'] = 'Impossible d\éditer l\'utilisateur, aucune correspondance en base de données.';
-    redirect_to("admin/dashboard/users/edit");
+    redirect_to($_SERVER['HTTP_REFERER']);
     die();
 }
 
-$validation->validate('first_name', $updated_user_data['first_name'], ['required']);
-$validation->validate('last_name', $updated_user_data['last_name'], ['required']);
-$validation->validate('picture', $updated_user_data['picture'], ['required', 'url']);
-$validation->validate('email', $updated_user_data['email'], ['required', 'email']);
-$validation->validate('role', $updated_user_data['role'], ['role', 'required']);
-if ($updated_user_data['role'] === 'admin') {
-    $validation->validate('password', $updated_user_data['password'], ['password']);
-}
-$is_valid = $validation->is_valid();
+$is_valid_user = $validation->validate_user($updated_user_data);
 
-if (!$is_valid) {
-    $errors = $validation->get_errors();
-    $_SESSION['errors'] = $errors;
-    redirect_to("admin/dashboard/users/edit");
+if (!$is_valid_user) {
+    $_SESSION['errors'] = $validation->get_validation_errors();
+    redirect_to($_SERVER['HTTP_REFERER']);
     die();
 }
 

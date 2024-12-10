@@ -1,6 +1,5 @@
 <?php
 
-
 class Database
 {
     private $dbconfig;
@@ -26,7 +25,7 @@ class Database
             $this->connexion = new PDO($db_url, $this->dbconfig['user']['username'], $this->dbconfig['user']['password'], [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
-        } catch (\Throwable $exception) {
+        } catch (PDOException $exception) {
             error_handler("Impossible de se connecter à la base de données, erreur : {$exception->getMessage()}", 500);
         }
     }
@@ -66,9 +65,6 @@ class Database
             throw $e;
         }
     }
-
-
-
 
     public function close_connexion()
     {
