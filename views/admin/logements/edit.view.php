@@ -186,38 +186,6 @@ access_view('/components/head.view', ['title' => 'Logements']);
                                 </li>
                             <?php endforeach; ?>
                         </ul>
-                        <div class="tags">
-                            <label for="new-tag">Ajouter des tags:</label>
-                            <div class="item-input">
-                                <input type="text" id="new-tag" placeholder="Nouveau tag">
-                                <button class="btn btn-ajout-form" type="button" onclick="add_item('tags','tag')">Ajouter</button>
-                            </div>
-                            <?php if (isset($_SESSION['errors'])): ?>
-                                <div class="error">
-                                    <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
-                                        <?php if (str_contains($name, 'tags')) : ?>
-                                            <p class="error-txt"><?= htmlspecialchars($value) ?></p>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endif; ?>
-                            <ul class="add-list" id="tags">
-
-                                <?php
-                                $tag =  $logement['tags'];
-                                $tag = str_replace(['{', '}'], '', $tag);
-                                $tag = str_replace(['"', '"'], '', $tag);
-                                $tags_array = explode(',', $tag);
-                                ?>
-                                <?php foreach ($tags_array as $tag): ?>
-                                    <li class="equipment-li">
-                                        <p><?= $tag ?></p>
-                                        <input type="hidden" name="tags[]" value="<?= $tag ?>">
-                                        <button type="button" class="btn btn-delete" onclick="this.parentElement.remove()">Supprimer</button>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
                         <div class="pictures">
                             <label for="new-photo">Ajouter des photos :</label>
                             <div class="item-input">

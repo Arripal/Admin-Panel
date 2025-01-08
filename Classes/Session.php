@@ -1,5 +1,7 @@
 <?php
 
+namespace Classes;
+
 class Session
 {
     public function create_session($params = [])

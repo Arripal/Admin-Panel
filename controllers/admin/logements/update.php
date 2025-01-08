@@ -1,10 +1,11 @@
 <?php
-require_once('./Classes/Validation.php');
-require_once('./Classes/Database.php');
-require_once('./Classes/LogementValidation.php');
+
+use Classes\Database\Database;
+use Classes\Validation\Logement;
+
 $db_config = require('./db_config.php');
 $db = new Database($db_config);
-$validation = new LogementValidation();
+$validation = new Logement();
 
 $updated_logement_data = $_POST;
 
@@ -17,10 +18,10 @@ if (empty($corresponding_logement)) {
     redirect_to($_SERVER['HTTP_REFERER']);
 }
 
-$is_valid = $validation->validate_logement($updated_logement_data);
+$is_valid = $validation->validate($updated_logement_data);
 
 if (!$is_valid) {
-    $errors = $validation->get_validation_errors();
+    $errors = $validation->get_errors();
     $_SESSION['errors'] = $errors;
     redirect_to($_SERVER['HTTP_REFERER']);
     die();

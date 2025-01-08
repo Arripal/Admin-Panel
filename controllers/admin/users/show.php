@@ -1,32 +1,10 @@
 <?php
-require_once('./Classes/Database.php');
+
+use Classes\Controllers\User\Show;
+use Classes\Database\User as DatabaseUser;
+
 $db_config = require('./db_config.php');
-$db = new Database($db_config);
+$database_user = new DatabaseUser($db_config);
+$show = new Show();
 
-$errors = [];
-$users = null;
-
-try {
-
-    $users = $db->fetch_all("SELECT * FROM public.user");
-
-    if (empty($users)) {
-        $errors['empty'] = "La ressource demandée est indisponible.";
-    }
-} catch (PDOException $e) {
-    $errors['db'] = "La ressource demandée est indisponible.";
-} finally {
-    $db->close_connexion();
-}
-
-
-if (!empty($users)) {
-    uasort($users, function ($a, $b) {
-        return $a['id'] - $b['id'];
-    });
-}
-
-access_view('/admin/users/users.view', [
-    'errors' => $errors,
-    'users' => $users
-]);
+$show->index($database_user);

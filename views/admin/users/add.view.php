@@ -26,7 +26,7 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Ajout']);
                     <?php if (isset($_SESSION['errors'])): ?>
                         <div class="error">
                             <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
-                                <?php if (str_contains($name, 'last_name')) : ?>
+                                <?php if (str_contains($name, 'name')) : ?>
                                     <p class="error-txt"><?= htmlspecialchars($value) ?></p>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -34,15 +34,6 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Ajout']);
                     <?php endif; ?>
                     <label for="first_name">Prénom :</label>
                     <input type="text" id="first_name" name="first_name" placeholder="Ajouter un prénom">
-                    <?php if (isset($_SESSION['errors'])): ?>
-                        <div class="error">
-                            <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
-                                <?php if (str_contains($name, 'first_name')) : ?>
-                                    <p class="error-txt"><?= htmlspecialchars($value) ?></p>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
                     <label for="email">Email :</label>
                     <input type="email" id="email" name="email" placeholder="Ajouter une adresse mail">
                     <?php if (isset($_SESSION['errors'])): ?>

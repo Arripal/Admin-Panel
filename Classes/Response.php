@@ -1,4 +1,7 @@
 <?php
+
+namespace Classes;
+
 class Response
 {
 

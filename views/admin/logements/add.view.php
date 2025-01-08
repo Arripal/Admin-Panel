@@ -78,6 +78,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
+
                     <div class="pictures">
                         <label for="new-photo">Ajouter des photos :</label>
                         <div class="item-input">
@@ -112,23 +113,6 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         <?php endif; ?>
                         <ul class="add-list" id="equipments"></ul>
                     </div>
-                    <div class="tags">
-                        <label for="new-tag">Ajouter des tags:</label>
-                        <div class="item-input">
-                            <input type="text" id="new-tag" placeholder="Nouveau tag">
-                            <button class="btn btn-ajout-form" type="button" onclick="add_item('tags','tag')">Ajouter</button>
-                        </div>
-                        <?php if (isset($_SESSION['errors'])): ?>
-                            <div class="error">
-                                <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
-                                    <?php if (str_contains($name, 'tags')) : ?>
-                                        <p class="error-txt"><?= htmlspecialchars($value) ?></p>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                        <ul class="add-list" id="tags"></ul>
-                    </div>
                     <?php if (isset($_SESSION['errors'])) {
                         unset($_SESSION['errors']);
                     } ?>
@@ -140,7 +124,6 @@ access_view('/components/head.view', ['title' => 'Logements']);
                 <script>
                     function add_item(items, item) {
                         const newItemInput = document.getElementById(`new-${item}`);
-                        console.log(items);
                         const itemsList = document.getElementById(`${items}`);
                         if (newItemInput.value.trim() !== '') {
                             const li = document.createElement('li');
@@ -154,6 +137,25 @@ access_view('/components/head.view', ['title' => 'Logements']);
                             newItemInput.value = '';
                         }
                     }
+
+                    document.querySelector('form').addEventListener('submit', function(event) {
+
+                        if (document.getElementById('pictures').children.length === 0) {
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.name = 'pictures[]';
+                            hiddenInput.value = '';
+                            this.appendChild(hiddenInput);
+                        }
+
+                        if (document.getElementById('equipments').children.length === 0) {
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.name = 'equipments[]';
+                            hiddenInput.value = '';
+                            this.appendChild(hiddenInput);
+                        }
+                    });
                 </script>
             </div>
         </main>

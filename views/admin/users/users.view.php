@@ -42,7 +42,7 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
                                     </button>
                                     <form class="delete-form" action="/admin/dashboard/users/delete" method="post">
                                         <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="user_id" value="<?= htmlspecialchars(trim($user['id'])) ?>">
+                                        <input type="hidden" name="user_email" value="<?= htmlspecialchars(trim($user['email'])) ?>">
                                         <button type="submit" class="btn btn-delete">
                                             Supprimer
                                         </button>

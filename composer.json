@@ -1,0 +1,13 @@
+{
+	"require": {
+		"respect/validation": "^2.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Classes\\": "Classes/",
+			"Routing\\": "Routing/",
+			"Traits\\": "Traits/",
+			"Interfaces\\": "Interfaces/"
+		}
+	}
+}
