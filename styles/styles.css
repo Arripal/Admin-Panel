@@ -223,6 +223,11 @@ body {
 	margin: 10px 0;
 }
 
+.success {
+	margin: 10px 0;
+	color: #4caf50;
+}
+
 .form-login {
 	display: flex;
 	flex-direction: column;

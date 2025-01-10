@@ -1,12 +1,12 @@
 <?php
 
-use Classes\Controllers\Logement\Edit;
-use Classes\Database\Logement;
+use Classes\Controllers\Logement\Edit as EditController;
+use Classes\Database\Logement as Database;
 
 $db_config = require('./db_config.php');
-$db_logement = new Logement($db_config);
-$edit = new Edit($db_logement);
+$database = new Database($db_config);
+$logement = new EditController($database);
 
 $logement_id = $_GET['id'];
 
-$edit->index($logement_id);
+$logement->edit($logement_id);

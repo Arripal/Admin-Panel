@@ -2,12 +2,11 @@
 
 namespace Classes\Validation;
 
-use Traits\ValidationTrait;
+use Interfaces\ValidationInterface;
 use Respect\Validation\Validator as v;
 
-class Logement
+class Logement extends Validation implements ValidationInterface
 {
-    use ValidationTrait;
 
     private const MIN_RATING = 0;
     private const MAX_RATING = 5;
@@ -22,62 +21,62 @@ class Logement
             ->rating($logement_data['rating'])
             ->location($logement_data['location'])
             ->title($logement_data['title'])
-            ->email($logement_data['host'])
+            ->is_email($logement_data['host'])
             ->equipments($logement_data['equipments']);
 
-        return $this->validation->valid();
+        return $this->valid();
     }
 
     private function rating($value = self::MIN_RATING)
     {
         if (!v::intVal()->between(self::MIN_RATING, self::MAX_RATING)->validate($value)) {
-            $this->validation->set_error('rating-value', 'La note n\'est pas valide, elle doit être comprise entre ' . self::MIN_RATING . ' et ' . self::MAX_RATING . '.');
+            $this->set_error('rating-value', 'La note n\'est pas valide, elle doit être comprise entre ' . self::MIN_RATING . ' et ' . self::MAX_RATING . '.');
         }
         return $this;
     }
 
-    private function email($value)
+    private function is_email($value)
     {
 
-        $valid = $this->validation->email($value);
+        $valid = $this->email($value);
         if (!$valid) {
-            $this->validation->set_error("error-host", "L'email est invalide.");
+            $this->set_error("error-host", "L'email est invalide.");
         }
         return $this;
     }
 
     private function title($value)
     {
-        $valid = $this->validation->length($value);
+        $valid = $this->length($value);
         if (!$valid) {
-            $this->validation->set_error("error-title", "Le titre est invalide.");
+            $this->set_error("error-title", "Le titre est invalide.");
         }
         return $this;
     }
 
     private function description($value)
     {
-        $valid = $this->validation->length($value);
+        $valid = $this->length($value);
         if (!$valid) {
-            $this->validation->set_error("error-description", "La description est invalide.");
+            $this->set_error("error-description", "La description est invalide.");
         }
         return $this;
     }
 
     private function location($value)
     {
-        $valid = $this->validation->length($value);
+        $valid = $this->length($value);
         if (!$valid) {
-            $this->validation->set_error("error-location", "La localisation est invalide.");
+            $this->set_error("error-location", "La localisation est invalide.");
         }
         return $this;
     }
 
     private function cover($value)
     {
-        $valid = $this->validation->url($value);
+        $valid = $this->url($value);
         if (!$valid) {
-            $this->validation->set_error("error-cover", "L'URL est invalide.");
+            $this->set_error("error-cover", "L'URL est invalide.");
         }
         return $this;
     }
@@ -86,7 +85,7 @@ class Logement
     {
 
         if ($equipments == null) {
-            $this->validation->set_error("error-equipments", "Au moins un équipement doit être fourni.");
+            $this->set_error("error-equipments", "Au moins un équipement doit être fourni.");
             return $this;
         }
 
@@ -96,14 +95,14 @@ class Logement
     private function pictures($pictures)
     {
         if ($pictures == null) {
-            $this->validation->set_error("error-pictures", "Au moins une image doit être fourni.");
+            $this->set_error("error-pictures", "Au moins une image doit être fourni.");
             return $this;
         }
 
-        $valid = $this->validation->urls_array($pictures);
+        $valid = $this->urls_array($pictures);
 
         if (!$valid) {
-            $this->validation->set_error("error-pictures", "Vous devez fournir les urls des images a utiliser.");
+            $this->set_error("error-pictures", "Vous devez fournir les urls des images a utiliser.");
         }
         return $this;
     }

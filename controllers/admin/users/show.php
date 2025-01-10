@@ -1,10 +1,10 @@
 <?php
 
-use Classes\Controllers\User\Show;
-use Classes\Database\User as DatabaseUser;
+use Classes\Controllers\User\Show as ShowController;
+use Classes\Database\User as Database;
 
 $db_config = require('./db_config.php');
-$database_user = new DatabaseUser($db_config);
-$show = new Show();
+$database = new Database($db_config);
+$user = new ShowController($database);
 
-$show->index($database_user);
+$user->show();

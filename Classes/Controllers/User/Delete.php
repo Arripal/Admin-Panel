@@ -2,21 +2,23 @@
 
 namespace Classes\Controllers\User;
 
-use Classes\Database\User as DatabaseUser;
-use PDOException;
+use Classes\Controllers\Abstractions\DeleteAbstractController;
+use Classes\Database\User as Database;
 
-class Delete
+class Delete extends DeleteAbstractController
 {
-    public function index($identifier, DatabaseUser $database_user)
-    {
-        try {
-            $database_user->delete('email', [
-                'email' => $identifier
-            ]);
-        } catch (PDOException $e) {
-            throw $e;
-        }
 
-        redirect_to('/admin/dashboard/users');
+    public function __construct(Database $database)
+    {
+        parent::__construct(
+            $database,
+            '/admin/dashboard/users'
+        );
+    }
+
+    protected function error_handler()
+    {
+        $_SESSION['error'] = "Impossible de supprimer l'utilisateur.";
+        redirect_to($this->path);
     }
 }

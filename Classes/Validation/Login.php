@@ -2,34 +2,30 @@
 
 namespace Classes\Validation;
 
-use Traits\ValidationTrait;
-
-class Login
+class Login extends Validation
 {
-
-    use ValidationTrait;
 
     public function validate(array $user_data)
     {
-        $this->email($user_data['email'])->password($user_data['password']);
-        return $this->validation->valid();
+        $this->is_email($user_data['email'])->is_password($user_data['password']);
+        return $this->valid();
     }
 
-    private function email($value)
+    private function is_email($value)
     {
 
-        $valid = $this->validation->email($value);
+        $valid = $this->email($value);
         if (!$valid) {
-            $this->validation->set_error("error-email", "L'email est invalide.");
+            $this->set_error("error-email", "L'email est invalide.");
         }
         return $this;
     }
 
-    private function password($value)
+    private function is_password($value)
     {
-        $valid = $this->validation->password($value);
+        $valid = $this->password($value);
         if (!$valid) {
-            $this->validation->set_error("error-password", "Le mot de passe saisie est invalide.");
+            $this->set_error("error-password", "Le mot de passe saisie est invalide.");
         }
         return $this;
     }

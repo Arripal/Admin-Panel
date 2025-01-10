@@ -2,35 +2,32 @@
 
 namespace Classes\Controllers\Logement;
 
-use Classes\Database\Logement;
-use PDOException;
+use Classes\Controllers\Abstractions\EditAbstractController;
+use Classes\Database\Logement as Database;
 
-class Edit
+class Edit extends EditAbstractController
 {
 
-    private $db_logement;
-    public function __construct(Logement $db_logement)
+    public function __construct(Database $database)
     {
-        $this->db_logement = $db_logement;
+        parent::__construct(
+            $database,
+            '/admin/dashboard/logements',
+            '/admin/logements/edit.view'
+        );
     }
 
-    public function index($logement_id)
+    protected function error_handler()
     {
-        try {
+        $_SESSION['error'] = 'Aucun résultat correspondant à votre demande';
+        redirect_to($this->path);
+        die();
+    }
 
-            $logement = $this->db_logement->get('id', ['id' => $logement_id]);
-
-            if (empty($logement)) {
-                $_SESSION['error'] = 'Impossible de mettre à jour le logement, il n\'existe pas en base de données.';
-                redirect_to('/admin/dashboard/logements');
-                die();
-            }
-        } catch (PDOException) {
-            access_view('/not_found');
-        }
-
-        access_view('/admin/logements/edit.view', [
-            'logement' => $logement
+    protected function render($data)
+    {
+        access_view($this->view, [
+            'logement' => $data
         ]);
     }
 }

@@ -12,6 +12,12 @@ access_view('/components/head.view', ['title' => 'Logements']);
         ?>
         <main class="content">
             <h2>Editer un logement</h2>
+            <?php if (isset($_SESSION['update'])) : ?>
+                <div class="error">
+                    <p class="error-txt"><?= htmlspecialchars($_SESSION['update']) ?></p>
+                </div>
+                <?php unset($_SESSION['update']) ?>
+            <?php endif; ?>
             <table>
                 <thead>
                     <tr>

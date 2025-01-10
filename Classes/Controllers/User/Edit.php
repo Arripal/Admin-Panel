@@ -2,24 +2,32 @@
 
 namespace Classes\Controllers\User;
 
-use Classes\Database\User as DatabaseUser;
+use Classes\Controllers\Abstractions\EditAbstractController;
+use Classes\Database\User as Database;
 
-class Edit
+class Edit extends EditAbstractController
 {
-    public function index($identifier, DatabaseUser $database_user)
+
+    public function __construct(Database $database)
     {
-        $errors = [];
+        parent::__construct(
+            $database,
+            '/admin/dashboard/users',
+            '/admin/users/edit.view'
+        );
+    }
 
-        $user = $database_user->get('id', ['id' => $identifier]);
-        if (empty($user)) {
-            $errors['empty'] = 'Aucun résultat correspondant à votre demande';
-            access_view('/not_found', [
-                'errors' => $errors
-            ]);
-        }
+    protected function error_handler()
+    {
+        $_SESSION['error'] = 'Aucun résultat correspondant à votre demande';
+        redirect_to($this->path);
+        die();
+    }
 
-        access_view('/admin/users/edit.view', [
-            'user' => $user
+    protected function render($data)
+    {
+        access_view($this->view, [
+            'user' => $data
         ]);
     }
 }

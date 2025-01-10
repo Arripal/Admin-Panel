@@ -2,61 +2,51 @@
 
 namespace Classes\Controllers\Logement;
 
-use Classes\Database\Logement;
+use Classes\Controllers\Abstractions\SaveAbstractController;
+use Classes\Database\Logement as DB_Logement;
 use Classes\Validation\Logement as Validation;
-use Classes\Database\User;
+use Classes\Database\User as DB_User;
+use PDOException;
 
-class Save
+class Save extends SaveAbstractController
 {
 
-    private $validation;
-    private $db_user;
-    private $db_logement;
-    public function __construct(Validation $validation, User $db_user, Logement $db_logement)
+    private DB_User $db_user;
+
+    public function __construct(DB_Logement $database, Validation $validation, DB_User $db_user)
     {
-        $this->validation = $validation;
+        parent::__construct($database, $validation, '/admin/dashboard/logements');
         $this->db_user = $db_user;
-        $this->db_logement = $db_logement;
     }
 
-    public function index($logement_data)
+
+    public function existing_user($identifier, $params)
     {
-        $this->validate($logement_data);
-        $this->find_existing_user($logement_data['host'], $this->db_user);
+        try {
 
-        $formated_data = $this->formated_data($logement_data);
+            $user = $this->db_user->get($identifier, $params);
 
-        $this->db_logement->save($formated_data);
-
-        redirect_to('/admin/dashboard/logements');
-    }
-
-    private function validate($logement_data)
-    {
-        if (!$this->validation->validate($logement_data)) {
-            $errors = $this->validation->get_errors();
-            $_SESSION['errors'] = $errors;
-            redirect_to($_SERVER['HTTP_REFERER']);
-            die();
+            if (!$user) {
+                $this->error_handler();
+            }
+        } catch (PDOException) {
+            $this->error_handler();
         }
+        return $this;
     }
 
-    private function find_existing_user($identifier)
+    private function error_handler()
     {
-        $user = $this->db_user->get('email', ['email' => $identifier]);
-
-        if (!$user) {
-            $_SESSION['user_error'] = 'Impossible d\'enregistrer ce logement,pas d\'utilisateur correspondant en base de données.';
-            redirect_to($_SERVER['HTTP_REFERER']);
-        }
+        $_SESSION['exists'] = 'Impossible d\'enregistrer ce logement,pas d\'utilisateur correspondant en base de données.';
+        redirect_to($_SERVER['HTTP_REFERER']);
+        die();
     }
 
-    private function formated_data($logement_data)
+    protected function formating($data)
     {
+        $data['equipments'] = set_array_to_db_insertion($data['equipments']);
+        $data['pictures'] = set_array_to_db_insertion($data['pictures']);
 
-        $logement_data['equipments'] = set_array_to_db_insertion($logement_data['equipments']);
-        $logement_data['pictures'] = set_array_to_db_insertion($logement_data['pictures']);
-
-        return $logement_data;
+        return $data;
     }
 }

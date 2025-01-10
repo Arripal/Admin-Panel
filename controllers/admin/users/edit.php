@@ -1,14 +1,13 @@
 <?php
 
-use Classes\Controllers\User;
-use Classes\Controllers\User\Edit;
-use Classes\Database\User as DatabaseUser;
+use Classes\Controllers\User\Edit as EditController;
+use Classes\Database\User as Database;
 
 $db_config = require('./db_config.php');
 
-$database_user = new DatabaseUser($db_config);
-$edit = new Edit();
+$database = new Database($db_config);
+$user = new EditController($database);
 
 $user_id = $_GET['id'];
 
-$edit->index($user_id, $database_user);
+$user->edit($user_id);

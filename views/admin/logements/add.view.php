@@ -16,11 +16,11 @@ access_view('/components/head.view', ['title' => 'Logements']);
                 <form action="/admin/dashboard/logements/save" method="post">
                     <input type="hidden" name="rating" value="0">
                     <h2>Ajout d'un logement</h2>
-                    <?php if (isset($_SESSION['user_error'])) : ?>
+                    <?php if (isset($_SESSION['save'])) : ?>
                         <div class="error">
-                            <p class="error-txt"><?= htmlspecialchars($_SESSION['user_error']) ?></p>
+                            <p class="error-txt"><?= htmlspecialchars($_SESSION['save']) ?></p>
                         </div>
-                        <?php unset($_SESSION['user_error']) ?>
+                        <?php unset($_SESSION['save']) ?>
                     <?php endif; ?>
                     <label for="title">Titre:</label>
                     <input type="text" id="title" name="title" placeholder="Ajouter un titre">

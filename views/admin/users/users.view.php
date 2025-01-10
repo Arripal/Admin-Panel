@@ -12,10 +12,22 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
         ?>
         <main class="content">
             <?php
-            if (isset($users)) { ?>
+            if (isset($data)) { ?>
                 <div class="add">
                     <h2>Liste des utilisateurs</h2>
                     <button class="btn"><a href="/admin/dashboard/users/add">Ajouter un utilisateur</a></button>
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div class="success">
+                            <?= $_SESSION['success']; ?>
+                        </div>
+                        <?php unset($_SESSION['success']); ?>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <div class="error">
+                            <?= $_SESSION['error'] ?>
+                        </div>
+                        <?php unset($_SESSION['error']); ?>
+                    <?php endif; ?>
                 </div>
                 <table>
                     <thead>
@@ -29,7 +41,7 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($users as $user) { ?>
+                        <?php foreach ($data as $user) { ?>
                             <tr>
                                 <td><?= htmlspecialchars(trim($user['name'])) ?></td>
                                 <td><?= htmlspecialchars(trim($user['email']))  ?></td>

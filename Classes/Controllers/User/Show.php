@@ -3,33 +3,28 @@
 
 namespace Classes\Controllers\User;
 
-use Classes\Database\User as Database_user;
-use PDOException;
+use Classes\Controllers\Abstractions\ShowAbstractController;
+use Classes\Database\User as Database;
 
-class Show
+class Show extends ShowAbstractController
 {
-    public function index(Database_user $database_user)
+    public function __construct(Database $database)
     {
-        $errors = [];
-        try {
+        parent::__construct(
+            $database,
+            '/admin/users/users.view'
+        );
+    }
 
-            $users = $database_user->get_all();
+    protected function error_handler()
+    {
+        $this->errors['empty'] = "Aucun utilisateur a afficher, la base de données est vide.";
+        $this->render(['errors' => $this->errors]);
+    }
 
-            if (empty($users)) {
-                $errors['empty'] = "La ressource demandée est indisponible.";
-                die();
-            }
-
-            uasort($users, function ($a, $b) {
-                return $a['id'] - $b['id'];
-            });
-
-            access_view('/admin/users/users.view', [
-                'errors' => $errors,
-                'users' => $users
-            ]);
-        } catch (PDOException) {
-            $errors['db'] = "La ressource demandée est indisponible.";
-        }
+    protected function render($entities)
+    {
+        access_view($this->view, $entities);
+        die();
     }
 }

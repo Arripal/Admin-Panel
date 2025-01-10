@@ -2,31 +2,30 @@
 
 namespace Classes\Controllers\Logement;
 
-use Classes\Database\Logement as Database_logement;
-use PDOException;
+use Classes\Controllers\Abstractions\ShowAbstractController;
+use Classes\Database\Logement as Database;
 
-class Show
+
+class Show extends ShowAbstractController
 {
-    public function index(Database_logement $database_logement)
+
+    public function __construct(Database $database)
     {
-        $errors = [];
-        try {
-            $logements = $database_logement->get_all();
+        parent::__construct(
+            $database,
+            '/admin/logements/logements.view'
+        );
+    }
 
-            if (empty($logements)) {
-                $errors['empty'] = "La ressource demandée est indisponible.";
-            }
-        } catch (PDOException) {
-            $errors['db'] = "La ressource demandée est indisponible.";
-        }
+    protected function error_handler()
+    {
+        $this->errors['empty'] = "Il n'y a aucun logement disponible pour le moment.";
+        $this->render(['errors' => $this->errors]);
+    }
 
-        uasort($logements, function ($a, $b) {
-            return $a['id'] - $b['id'];
-        });
-
-        access_view('/admin/logements/logements.view', [
-            'errors' => $errors,
-            'logements' => $logements
-        ]);
+    protected function render($entities)
+    {
+        access_view($this->view, $entities);
+        die();
     }
 }

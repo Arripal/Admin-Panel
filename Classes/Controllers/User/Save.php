@@ -2,25 +2,33 @@
 
 namespace Classes\Controllers\User;
 
-use Traits\UserTrait;
+use Classes\Controllers\Abstractions\SaveAbstractController;
+use Classes\Crypt;
+use Classes\Database\User as Database;
+use Classes\Validation\User as Validation;
 
-class Save
+
+class Save extends SaveAbstractController
 {
 
-    use UserTrait;
+    private Crypt $crypt;
 
-    public function index($user_data)
+    public function __construct(Database $database, Validation $validation, Crypt $crypt)
     {
-        $this->validate_credentials($user_data);
+        parent::__construct($database, $validation, '/admin/dashboard/users');
+        $this->crypt = $crypt;
+    }
 
-        $error_message = 'Cette adresse mail est déjà utilisée.';
+    protected function formating($user_data)
+    {
+        $hashed_password = $this->crypt->password_encryption($user_data['password']);
+        $full_name = $user_data['first_name'] . ' ' . $user_data['last_name'];
 
-        $this->check_existing_user($user_data['email'], $error_message);
+        unset($user_data['first_name']);
+        unset($user_data['last_name']);
+        $user_data['password'] = $hashed_password;
+        $user_data['name'] = $full_name;
 
-        $user_data = $this->formating_data($user_data);
-
-        $this->database_user->save($user_data);
-
-        redirect_to('/admin/dashboard/users');
+        return $user_data;
     }
 }

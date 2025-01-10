@@ -16,9 +16,9 @@ interface DatabaseMethodsInterface
     public function delete($identifier, $params = []);
 
 
-    public function save($user_data);
+    public function save($data);
 
-    public function update($user_data);
+    public function update($data);
 
 
     public function close_connexion();

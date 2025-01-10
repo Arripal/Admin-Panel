@@ -1,16 +1,17 @@
 <?php
 
-use Classes\Controllers\User\Save;
+use Classes\Controllers\User\Save as SaveController;
 use Classes\Crypt;
-use Classes\Database\User as DatabaseUser;
-use Classes\Validation\User as ValidationUser;
+use Classes\Database\User as Database;
+use Classes\Validation\User as Validation;
 
 $db_config = require('./db_config.php');
 
-$database_user = new DatabaseUser($db_config);
-$validation_user = new ValidationUser();
+$database = new Database($db_config);
+$validation = new Validation();
 $crypt = new Crypt();
-$save = new Save($database_user, $validation_user, $crypt);
+$user = new SaveController($database, $validation, $crypt);
 
-$user_data = $_POST;
-$save->index($user_data);
+$data = $_POST;
+
+$user->validate_data($data)->save($data)->success("L'utilisateur a bien été enregistré.");

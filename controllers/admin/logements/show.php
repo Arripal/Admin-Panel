@@ -1,10 +1,10 @@
 <?php
 
-use Classes\Controllers\Logement\Show;
-use Classes\Database\Logement as Database_logement;
+use Classes\Controllers\Logement\Show as ShowController;
+use Classes\Database\Logement as Database;
 
 $db_config = require('./db_config.php');
-$db_logement = new Database_logement($db_config);
-$show = new Show();
+$database = new Database($db_config);
+$logement = new ShowController($database);
 
-$show->index($db_logement);
+$logement->show();

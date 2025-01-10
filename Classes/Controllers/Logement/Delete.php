@@ -2,19 +2,22 @@
 
 namespace Classes\Controllers\Logement;
 
-use Classes\Database\Logement as Database_logement;
-use PDOException;
+use Classes\Controllers\Abstractions\DeleteAbstractController;
+use Classes\Database\Logement as Database;
 
-class Delete
+class Delete extends DeleteAbstractController
 {
-    public function index($identifier, Database_logement $database_logement)
+    public function __construct(Database $database)
     {
-        try {
-            $database_logement->delete('id', ['id' => $identifier]);
-        } catch (PDOException $e) {
-            throw $e;
-        }
+        parent::__construct(
+            $database,
+            '/admin/dashboard/logements'
+        );
+    }
 
-        redirect_to('/admin/dashboard/logements');
+    protected function error_handler()
+    {
+        $_SESSION['error'] = "Impossible de supprimer le logement.";
+        redirect_to($this->path);
     }
 }

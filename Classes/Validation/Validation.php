@@ -14,32 +14,32 @@ class Validation
 
     public function minlength($value, $min_length = self::MIN_LENGTH)
     {
-        return v::stringType()->length($min_length, null)->validate($value) ? true : false;
+        return v::stringType()->length($min_length, null)->validate($value);
     }
 
     public function length($value, $min_length = self::MIN_LENGTH, $max_length = self::MAX_LENGTH)
     {
-        return v::stringType()->length($min_length, $max_length)->validate($value) ? true : false;
+        return v::stringType()->length($min_length, $max_length)->validate($value);
     }
 
     public function email($value)
     {
-        return v::email()->validate($value) ? true : false;
+        return v::email()->validate($value);
     }
 
     public function url($value)
     {
-        return v::url()->validate($value) ? true : false;
+        return v::url()->validate($value);
     }
 
     public function digit($value)
     {
-        return v::digit()->validate($value) ? true : false;
+        return v::digit()->validate($value);
     }
 
     public function alpha($value)
     {
-        return v::alpha()->validate($value) ? true : false;
+        return v::alpha()->validate($value);
     }
 
     public function password($value)

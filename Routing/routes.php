@@ -1,6 +1,5 @@
 <?php
 
-$router->get('/logements', '/logements/show.php', false);
 $router->get('/admin/login', '/admin/login/login_form.php', false);
 $router->get('/admin/logout', '/admin/logout.php');
 $router->post('/admin/login', '/admin/login/login.php', false);

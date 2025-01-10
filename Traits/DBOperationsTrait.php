@@ -50,19 +50,20 @@ trait DBOperationsTrait
         return $this->database->fetch($query, $params);
     }
 
-    public function update($user_data)
+    public function update($data)
     {
-        $id = strip_tags($user_data['id']);
-        unset($user_data['id']);
+        $id = strip_tags($data['id']);
+        unset($data['id']);
 
-        $user_fields = [];
+        $fields = [];
         $params = ['id' => $id];
 
-        foreach ($user_data as $field => $value) {
-            $user_fields[] = "{$field} = :{$field}";
+        foreach ($data as $field => $value) {
+            $fields[] = "{$field} = :{$field}";
             $params[$field] = strip_tags($value);
         }
-        $formated_fields = implode(', ', $user_fields);
+
+        $formated_fields = implode(', ', $fields);
 
         $query = "UPDATE " . $this->get_table_name() . " SET {$formated_fields} WHERE id = :id";
 

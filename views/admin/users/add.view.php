@@ -15,11 +15,11 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Ajout']);
             <div class="form-container">
                 <form action="/admin/dashboard/users/save" method="post">
                     <h2>Ajout d'un utilisateur</h2>
-                    <?php if (isset($_SESSION['existing_user'])) : ?>
+                    <?php if (isset($_SESSION['save'])) : ?>
                         <div class="error">
-                            <p class="error-txt"><?= htmlspecialchars($_SESSION['existing_user']) ?></p>
+                            <p class="error-txt"><?= htmlspecialchars($_SESSION['save']) ?></p>
                         </div>
-                        <?php unset($_SESSION['existing_user']) ?>
+                        <?php unset($_SESSION['save']) ?>
                     <?php endif; ?>
                     <label for="last_name">Nom :</label>
                     <input type="text" id="last_name" name="last_name" placeholder="Ajouter un nom">

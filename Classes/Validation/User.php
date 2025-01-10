@@ -2,12 +2,12 @@
 
 namespace Classes\Validation;
 
-use Traits\ValidationTrait;
+use Interfaces\ValidationInterface;
 use Respect\Validation\Validator as v;
 
-class User
+class User extends Validation implements ValidationInterface
 {
-    use ValidationTrait;
+
     private const ROLES = ['admin', 'user'];
 
     public function validate(array $user_data)
@@ -15,30 +15,30 @@ class User
         $this
             ->name($user_data['first_name'])
             ->name($user_data['last_name'])
-            ->email($user_data['email'])
-            ->password($user_data['password'])
+            ->is_email($user_data['email'])
+            ->is_password($user_data['password'])
             ->picture($user_data['picture'])
             ->role($user_data['role'])
         ;
 
-        return $this->validation->valid();
+        return $this->valid();
     }
 
-    private function email($value)
+    private function is_email($value)
     {
 
-        $valid = $this->validation->email($value);
+        $valid = $this->email($value);
         if (!$valid) {
-            $this->validation->set_error("error-email", "L'email est invalide.");
+            $this->set_error("error-email", "L'email est invalide.");
         }
         return $this;
     }
 
-    private function password($value)
+    private function is_password($value)
     {
-        $valid = $this->validation->password($value);
+        $valid = $this->password($value);
         if (!$valid) {
-            $this->validation->set_error("error-password", "Le mot de passe saisie est invalide.");
+            $this->set_error("error-password", "Le mot de passe saisie est invalide.");
         }
         return $this;
     }
@@ -49,7 +49,7 @@ class User
         $value = strtolower($value);
 
         if (!v::in(self::ROLES)->validate($value)) {
-            $this->validation->set_error('error-role', "Role invalide.");
+            $this->set_error('error-role', "Role invalide.");
         }
         return $this;
     }
@@ -57,20 +57,20 @@ class User
     public function name($value)
     {
         if ($value == null or $value == '') {
-            $this->validation->set_error("error-name", "Un nom valide est requis.");
+            $this->set_error("error-name", "Un nom valide est requis.");
             return $this;
         }
-        if (!$this->validation->alpha($value)) {
-            $this->validation->set_error("error-name", "Le nom saisie est invalide, il ne doit contenir que des lettres.");
+        if (!$this->alpha($value)) {
+            $this->set_error("error-name", "Le nom saisie est invalide, il ne doit contenir que des lettres.");
         }
         return $this;
     }
 
     public function picture($value)
     {
-        $valid = $this->validation->url($value);
+        $valid = $this->url($value);
         if (!$valid) {
-            $this->validation->set_error("error-picture", "Une url valide de la photo de profil est requise.");
+            $this->set_error("error-picture", "Une url valide de la photo de profil est requise.");
         }
         return $this;
     }

@@ -2,30 +2,41 @@
 
 namespace Classes\Controllers\User;
 
-use Traits\UserTrait;
+use Classes\Controllers\Abstractions\UpdateAbstractController;
+use Classes\Crypt;
+use Classes\Database\User as Database;
+use Classes\Validation\User as Validation;
 
-class Update
+
+class Update extends UpdateAbstractController
 {
 
-    use UserTrait;
+    private $crypt;
 
-    public function index($user_data)
+    public function __construct(Database $database, Validation $validation, Crypt $crypt)
     {
-        $this->validate_credentials($user_data);
+        parent::__construct(
+            $database,
+            $validation,
+            '/admin/dashboard/users'
+        );
 
-        $error_message = 'Impossible d\éditer l\'utilisateur, aucune correspondance en base de données.';
+        $this->crypt = $crypt;
+    }
 
-        $user = $this->database_user->get('email', ['email' => $user_data['email']]);
 
-        if (!$user) {
-            $_SESSION['empty_user'] = $error_message;
-            redirect_to($_SERVER['HTTP_REFERER']);
-            die();
-        }
+    protected function formating($data)
+    {
+        $hashed_password = $this->crypt->password_encryption($data['password']);
+        $full_name = $data['first_name'] . ' ' . $data['last_name'];
 
-        $user_data = $this->formating_data($user_data);
+        unset($data['first_name']);
+        unset($data['last_name']);
+        $data['password'] = $hashed_password;
+        $data['name'] = $full_name;
 
-        $this->database_user->update($user_data);
-        redirect_to('/admin/dashboard/users');
+        $data = array_diff_key($data, ['_method' => '']);
+
+        return $data;
     }
 }
