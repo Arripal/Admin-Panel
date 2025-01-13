@@ -12,6 +12,12 @@ access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
         ?>
         <main class="content">
             <h2>Editer un utilisateur</h2>
+            <?php if (isset($_SESSION['update'])) : ?>
+                <div class="error">
+                    <p class="error-txt"><?= htmlspecialchars($_SESSION['update']) ?></p>
+                </div>
+                <?php unset($_SESSION['update']) ?>
+            <?php endif; ?>
             <table>
                 <thead>
                     <tr>
@@ -49,7 +55,7 @@ access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
                                     </button>
                                     <form class="delete-form" action="/admin/dashboard/users/delete" method="post">
                                         <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="user_id" value="<?= htmlspecialchars(trim($user['id'])) ?>">
+                                        <input type="hidden" name="user_email" value="<?= htmlspecialchars(trim($user['email'])) ?>">
                                         <button type="submit" class="btn btn-delete">
                                             Supprimer
                                         </button>
@@ -82,7 +88,7 @@ access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
                     <?php if (isset($_SESSION['errors'])): ?>
                         <div class="error">
                             <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
-                                <?php if (str_contains($name, 'first_name')) : ?>
+                                <?php if (str_contains($name, 'name')) : ?>
                                     <p class="error-txt"><?= htmlspecialchars($value) ?></p>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -90,15 +96,6 @@ access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
                     <?php endif; ?>
                     <label for="last_name">Nom :</label>
                     <input type="text" id="last_name" name="last_name" value="<?= htmlspecialchars(trim($last_name)) ?>">
-                    <?php if (isset($_SESSION['errors'])): ?>
-                        <div class="error">
-                            <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
-                                <?php if (str_contains($name, 'last_name')) : ?>
-                                    <p class="error-txt"><?= htmlspecialchars($value) ?></p>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
                     <?php if (strtolower($user['role']) === 'admin') : ?>
                         <label for="password">Mot de passe :</label>
                         <input type="text" id="password" name="password"
@@ -155,6 +152,9 @@ access_view('/components/head.view', ['title' => 'Utilisateur - Editer']);
                         </button>
                         <button class="btn btn-add" type="submit">Sauvegarder</button>
                     </div>
+                    <?php if (isset($_SESSION['errors'])) {
+                        unset($_SESSION['errors']);
+                    } ?>
                 </form>
             </div>
         </main>

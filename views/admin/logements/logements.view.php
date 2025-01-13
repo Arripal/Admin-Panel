@@ -12,10 +12,16 @@ access_view('/components/head.view', ['title' => 'Logements']);
         ?>
         <main class="content">
             <?php
-            if (isset($logements)) { ?>
+            if (isset($data)) { ?>
                 <div class="add">
                     <h2>Liste des logements</h2>
                     <button class="btn"><a href="/admin/dashboard/logements/add">Ajouter un logement</a></button>
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div class="success">
+                            <?= $_SESSION['success']; ?>
+                        </div>
+                        <?php unset($_SESSION['success']); ?>
+                    <?php endif; ?>
                     <?php if (isset($_SESSION['error'])): ?>
                         <div class="error">
                             <?= $_SESSION['error'] ?>
@@ -37,7 +43,7 @@ access_view('/components/head.view', ['title' => 'Logements']);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($logements as $logement) { ?>
+                        <?php foreach ($data as $logement) { ?>
                             <tr>
                                 <td><?= htmlspecialchars(trim($logement['title']))  ?></td>
                                 <td><?= htmlspecialchars(trim($logement['host'])) ?></td>

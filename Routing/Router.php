@@ -1,5 +1,9 @@
 <?php
 
+namespace Routing;
+
+use Classes\Authentification;
+
 class Router
 {
     private $routes = [];
@@ -54,12 +58,17 @@ class Router
         return $route['secured'];
     }
 
-    public function use_route($url, $method)
+    public function use_route($url, $method, Authentification $authentification)
     {
         $route = $this->current_route($url, $method);
 
         if (!$route) {
-            throw new Exception("Impossible d'accéder à votre requête", 500);
+            return redirect_to('/not_found');
+        }
+        $is_secured_route = $this->is_secured_route($route);
+
+        if ($is_secured_route) {
+            $authentification->verify_admin_access();
         }
 
         return require(__DIR__ . '../../controllers' . $route['controller']);

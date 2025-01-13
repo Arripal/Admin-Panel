@@ -15,18 +15,18 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Ajout']);
             <div class="form-container">
                 <form action="/admin/dashboard/users/save" method="post">
                     <h2>Ajout d'un utilisateur</h2>
-                    <?php if (isset($_SESSION['existing_user'])) : ?>
+                    <?php if (isset($_SESSION['save'])) : ?>
                         <div class="error">
-                            <p class="error-txt"><?= htmlspecialchars($_SESSION['existing_user']) ?></p>
+                            <p class="error-txt"><?= htmlspecialchars($_SESSION['save']) ?></p>
                         </div>
-                        <?php unset($_SESSION['existing_user']) ?>
+                        <?php unset($_SESSION['save']) ?>
                     <?php endif; ?>
                     <label for="last_name">Nom :</label>
                     <input type="text" id="last_name" name="last_name" placeholder="Ajouter un nom">
                     <?php if (isset($_SESSION['errors'])): ?>
                         <div class="error">
                             <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
-                                <?php if (str_contains($name, 'last_name')) : ?>
+                                <?php if (str_contains($name, 'name')) : ?>
                                     <p class="error-txt"><?= htmlspecialchars($value) ?></p>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -34,15 +34,6 @@ access_view('/components/head.view', ['title' => 'Utilisateurs - Ajout']);
                     <?php endif; ?>
                     <label for="first_name">Prénom :</label>
                     <input type="text" id="first_name" name="first_name" placeholder="Ajouter un prénom">
-                    <?php if (isset($_SESSION['errors'])): ?>
-                        <div class="error">
-                            <?php foreach ($_SESSION['errors'] as $name => $value) : ?>
-                                <?php if (str_contains($name, 'first_name')) : ?>
-                                    <p class="error-txt"><?= htmlspecialchars($value) ?></p>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
                     <label for="email">Email :</label>
                     <input type="email" id="email" name="email" placeholder="Ajouter une adresse mail">
                     <?php if (isset($_SESSION['errors'])): ?>

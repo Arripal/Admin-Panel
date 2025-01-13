@@ -1,7 +1,12 @@
 <?php
 
+namespace Classes;
+
+use Classes\Session;
+
 class Authentification
 {
+
     private $session;
 
     public function __construct()
@@ -19,5 +24,11 @@ class Authentification
         }
 
         return true;
+    }
+
+    public function is_authenticated()
+    {
+        $this->session->start_session();
+        return isset($_SESSION['admin_id']);
     }
 }

@@ -1,5 +1,7 @@
 <?php
-require_once('./Classes/Session.php');
+
+use Classes\Session;
+
 $session = new Session();
 
 $session->close_session();

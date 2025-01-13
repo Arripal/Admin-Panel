@@ -1,31 +1,12 @@
 <?php
 
-require_once('./Classes/Database.php');
-require_once('./Classes/Session.php');
+use Classes\Controllers\Logement\Delete as DeleteController;
+use Classes\Database\Logement as Database;
+
 $db_config = require('./db_config.php');
-$session = new Session();
-$db = new Database($db_config);
+$database = new Database($db_config);
+$logement = new DeleteController($database);
 
 $data = $_POST;
 
-try {
-    $corresponding_logement = $db->fetch('SELECT * FROM public.logements WHERE id = :id', [
-        'id' => $data['logement_id']
-    ]);
-
-    if (empty($corresponding_logement)) {
-        $_SESSION['error'] = 'Impossible de mettre à jour le logement, il n\'existe pas en base de données.';
-        redirect_to('/admin/dashboard/logements');
-        die();
-    }
-
-    $db->delete_one('DELETE FROM public.logements WHERE id = :id', [
-        'id' => $data['logement_id']
-    ]);
-
-    redirect_to('/admin/dashboard/logements');
-} catch (PDOException $e) {
-    throw $e;
-} finally {
-    $db->close_connexion();
-}
+$logement->delete(['name' => 'id', 'value' => $data['logement_id']])->success("Le logement a été supprimé avec succès.");

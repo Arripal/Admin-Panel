@@ -1,5 +1,7 @@
 <?php
 
+namespace Classes;
+
 class Crypt
 {
     public function password_encryption($password)
