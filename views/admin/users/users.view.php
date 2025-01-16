@@ -13,7 +13,7 @@ access_view('/components/head.view', ['title' => 'Utilisateurs']);
                 <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><a href="/admin/dashboard/users/add">Ajouter un utilisateur</a>
                 </button>
                 <?php if (isset($_SESSION['success'])): ?>
-                    <div class="text-emerald-600 text-lg py-3 mt-3">
+                    <div class="text-emerald-600 text-lg py-3 mb-3">
                         <?= $_SESSION['success']; ?>
                     </div>
                     <?php unset($_SESSION['success']); ?>
