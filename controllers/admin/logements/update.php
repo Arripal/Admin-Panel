@@ -10,5 +10,9 @@ $validation = new Validation();
 $logement = new UpdateController($database, $validation);
 
 $data = $_POST;
+unset($data['new-photo']);
+unset($data['_method']);
 
-$logement->validate_data($data)->update($data)->success("Le logement a bien été mis à jour.");
+$data = clean_inputs($data);
+
+$logement->validate_data($data)->update($data)->success("Le logement a bien été mis à jour.")->redirection('/admin/dashboard/logements');

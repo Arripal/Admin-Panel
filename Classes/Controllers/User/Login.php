@@ -11,14 +11,12 @@ class Login
 {
     private Validation $login;
     private Database $database;
-    private Crypt $crypt;
     private Session $session;
 
-    public function __construct(Validation $login, Database $database, Crypt $crypt, Session $session)
+    public function __construct(Validation $login, Database $database, Session $session)
     {
         $this->login = $login;
         $this->database = $database;
-        $this->crypt = $crypt;
         $this->session = $session;
     }
 
@@ -41,7 +39,7 @@ class Login
             ]);
         }
 
-        $matching_passwords = $this->crypt->password_decryption($data['password'], $user['password']);
+        $matching_passwords = Crypt::password_decryption($data['password'], $user['password']);
 
         if (!$matching_passwords) {
             access_view('admin/login.view', [

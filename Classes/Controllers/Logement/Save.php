@@ -15,7 +15,8 @@ class Save extends SaveAbstractController
 
     public function __construct(DB_Logement $database, Validation $validation, DB_User $db_user)
     {
-        parent::__construct($database, $validation, '/admin/dashboard/logements');
+        parent::__construct($database, $validation);
+
         $this->db_user = $db_user;
     }
 

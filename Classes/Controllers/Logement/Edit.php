@@ -7,13 +7,13 @@ use Classes\Database\Logement as Database;
 
 class Edit extends EditAbstractController
 {
+    static $path = '/admin/dashboard/logements';
+    private $view = '/admin/logements/edit.view';
 
     public function __construct(Database $database)
     {
         parent::__construct(
-            $database,
-            '/admin/dashboard/logements',
-            '/admin/logements/edit.view'
+            $database
         );
     }
 

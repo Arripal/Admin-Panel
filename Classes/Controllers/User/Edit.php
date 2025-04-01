@@ -8,12 +8,13 @@ use Classes\Database\User as Database;
 class Edit extends EditAbstractController
 {
 
+    private $path = '/admin/dashboard/users';
+    private $view = '/admin/users/edit.view';
+
     public function __construct(Database $database)
     {
         parent::__construct(
             $database,
-            '/admin/dashboard/users',
-            '/admin/users/edit.view'
         );
     }
 

@@ -8,14 +8,10 @@ use PDOException;
 abstract class EditAbstractController
 {
     protected DatabaseMethodsInterface $database;
-    protected $path;
-    protected $view;
 
-    public function __construct(DatabaseMethodsInterface $database, string $redirect, string $view)
+    public function __construct(DatabaseMethodsInterface $database,)
     {
         $this->database = $database;
-        $this->path = $redirect;
-        $this->view = $view;
     }
 
     public function edit($identifier)

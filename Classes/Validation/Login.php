@@ -5,6 +5,8 @@ namespace Classes\Validation;
 class Login extends Validation
 {
 
+    private $validation = new Validation();
+
     public function validate(array $user_data)
     {
         $this->is_email($user_data['email'])->is_password($user_data['password']);
@@ -13,7 +15,6 @@ class Login extends Validation
 
     private function is_email($value)
     {
-
         $valid = $this->email($value);
         if (!$valid) {
             $this->set_error("error-email", "L'email est invalide.");

@@ -7,6 +7,6 @@ $db_config = require('./db_config.php');
 $database = new Database($db_config);
 $logement = new EditController($database);
 
-$logement_id = $_GET['id'];
+$logement_id = strip_tags(trim($_GET['id']));
 
 $logement->edit($logement_id);

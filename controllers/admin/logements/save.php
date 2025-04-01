@@ -11,6 +11,6 @@ $db_user = new DB_User($db_config);
 $validation = new Validation();
 $save = new SaveController($db_logement, $validation, $db_user);
 
-$data = $_POST;
+$data = clean_inputs($_POST);
 
-$save->validate_data($data)->existing_user('email', ['email' => $data['host']])->save($data)->success("Le logement a bien été enregistré.");
+$save->validate_data($data)->existing_user('email', ['email' => $data['host']])->save($data)->success("Le logement a bien été enregistré.")->redirection('/admin/dashboard/logements');

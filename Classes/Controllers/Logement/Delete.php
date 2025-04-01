@@ -7,11 +7,12 @@ use Classes\Database\Logement as Database;
 
 class Delete extends DeleteAbstractController
 {
+    static $path = '/admin/dashboard/logements';
+
     public function __construct(Database $database)
     {
         parent::__construct(
             $database,
-            '/admin/dashboard/logements'
         );
     }
 

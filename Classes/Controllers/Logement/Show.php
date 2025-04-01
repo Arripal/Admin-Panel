@@ -8,12 +8,12 @@ use Classes\Database\Logement as Database;
 
 class Show extends ShowAbstractController
 {
+    private $view = '/admin/logements/logements.view';
 
     public function __construct(Database $database)
     {
         parent::__construct(
-            $database,
-            '/admin/logements/logements.view'
+            $database
         );
     }
 

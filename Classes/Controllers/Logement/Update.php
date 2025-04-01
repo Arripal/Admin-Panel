@@ -9,12 +9,12 @@ use Classes\Validation\Logement as Validation;
 class Update extends UpdateAbstractController
 {
 
+
     public function __construct(Database $database, Validation $validation)
     {
         parent::__construct(
             $database,
-            $validation,
-            '/admin/dashboard/logements'
+            $validation
         );
     }
 

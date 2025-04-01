@@ -7,14 +7,12 @@ use PDOException;
 
 abstract class ShowAbstractController
 {
-
     protected DatabaseMethodsInterface $database;
-    protected $view;
     protected $errors = [];
-    public function __construct(DatabaseMethodsInterface $database,  string $view)
+
+    public function __construct(DatabaseMethodsInterface $database)
     {
         $this->database = $database;
-        $this->view = $view;
     }
 
     public function show()

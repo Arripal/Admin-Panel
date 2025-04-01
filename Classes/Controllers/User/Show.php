@@ -8,11 +8,11 @@ use Classes\Database\User as Database;
 
 class Show extends ShowAbstractController
 {
+    private $view = '/admin/users/users.view';
     public function __construct(Database $database)
     {
         parent::__construct(
-            $database,
-            '/admin/users/users.view'
+            $database
         );
     }
 

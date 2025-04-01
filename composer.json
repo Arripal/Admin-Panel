@@ -1,7 +1,4 @@
 {
-	"require": {
-		"respect/validation": "^2.3"
-	},
 	"autoload": {
 		"psr-4": {
 			"Classes\\": "Classes/",
@@ -9,5 +6,8 @@
 			"Traits\\": "Traits/",
 			"Interfaces\\": "Interfaces/"
 		}
+	},
+	"require": {
+		"respect/validation": "^2.4"
 	}
 }

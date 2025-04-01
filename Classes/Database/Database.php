@@ -21,7 +21,7 @@ class Database
     {
         try {
             $db_url = sprintf(
-                "pgsql:host=%s;port=%s;dbname=%s",
+                $this->dbconfig['connexion_string'],
                 $this->dbconfig['database']['host'],
                 $this->dbconfig['database']['port'],
                 $this->dbconfig['database']['db_name']
@@ -31,7 +31,7 @@ class Database
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
         } catch (PDOException $exception) {
-            error_handler("Impossible de se connecter à la base de données, erreur : {$exception->getMessage()}", 500);
+            throw $exception;
         }
     }
 

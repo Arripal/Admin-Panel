@@ -8,6 +8,6 @@ $db_config = require('./db_config.php');
 $database = new Database($db_config);
 $user = new EditController($database);
 
-$user_id = $_GET['id'];
+$user_id = strip_tags($_GET['id']);
 
 $user->edit($user_id);

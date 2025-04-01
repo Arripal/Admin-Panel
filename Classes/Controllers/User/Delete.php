@@ -7,12 +7,12 @@ use Classes\Database\User as Database;
 
 class Delete extends DeleteAbstractController
 {
+    static $path = '/admin/dashboard/users';
 
     public function __construct(Database $database)
     {
         parent::__construct(
             $database,
-            '/admin/dashboard/users'
         );
     }
 

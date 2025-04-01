@@ -10,13 +10,11 @@ abstract class UpdateAbstractController
 {
     protected DatabaseMethodsInterface $database;
     protected ValidationInterface $validation;
-    protected $path;
 
-    public function __construct(DatabaseMethodsInterface $database, ValidationInterface $validation, $path)
+    public function __construct(DatabaseMethodsInterface $database, ValidationInterface $validation)
     {
         $this->database = $database;
         $this->validation = $validation;
-        $this->path = $path;
     }
 
     public function update($data)
@@ -48,8 +46,13 @@ abstract class UpdateAbstractController
     public function success($message)
     {
         $_SESSION['success'] = $message;
-        redirect_to($this->path);
-        die();
+        return $this;
     }
+
+    public function redirection(string $path)
+    {
+        return redirect_to($path);
+    }
+
     abstract protected function formating($data);
 }
