@@ -19,6 +19,6 @@ class Delete extends DeleteAbstractController
     protected function error_handler()
     {
         $_SESSION['error'] = "Impossible de supprimer le logement.";
-        redirect_to($this->path);
+        redirect_to(static::$path);
     }
 }

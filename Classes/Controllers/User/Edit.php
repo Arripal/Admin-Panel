@@ -21,7 +21,7 @@ class Edit extends EditAbstractController
     protected function error_handler()
     {
         $_SESSION['error'] = 'Aucun résultat correspondant à votre demande';
-        redirect_to($this->path);
+        redirect_to(static::$path);
         die();
     }
 
